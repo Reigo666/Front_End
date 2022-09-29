@@ -1,0 +1,84 @@
+@media screen and (width:600px){
+    body{
+        color:red;
+    }
+}
+figure figcaption{
+    position: absolute;
+    top: 337.5px;
+    left: 600px;
+    transform: translate(-50%,-50%);
+    text-align: center;
+}
+
+.task2 .task2-wrapper{
+    display: flex;
+    text-align: center;
+    
+    justify-content: center;
+}
+
+.task2 .left,.task2 .right,.task2 .middle{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.task2 .left,.task2 .right{
+    width: 10%;
+    
+}
+.task2 .left{
+    background-color: #D16AA5;
+}
+
+.task2 .middle{
+    width: 80%;
+    background-color: #86A8E7;
+}
+
+.task2 .right{
+    background-color: #008B74;
+    height: 100px;
+}
+
+.task3 ul{
+    display: flex;
+    list-style-type: none;
+    background-color: #000;
+    color: #fff;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    height: 40px;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+.task3 ul li{
+    margin-left: 30px;
+}
+
+.task3 .main-content{
+    height: 200px;
+    text-align: center;
+    
+}
+
+.task3 .main-content .main-content-wrapper{
+    position: relative;
+    top: 50%;
+    transform: translate(0,-50%); 
+}
+
+.task3 .main-content:nth-of-type(2n+1){
+    background-color: #fff;
+}
+
+.task3 .main-content:nth-of-type(2n+2){
+    background-color: #EEEEEE;
+}

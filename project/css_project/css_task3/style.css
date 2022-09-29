@@ -1,0 +1,83 @@
+.task1 ul{
+    border: 2px solid #000;
+}
+
+.task1 ul ol{
+    background-color: #eee;
+}
+
+.task1 ul ol ol{
+    border: 1px solid #ccc;
+}
+
+.task1 ul li:nth-child(1),.task1 ol li:nth-child(1){
+    font-weight: bold;
+    background-color: #000;
+    color: #fff;
+    border-bottom: #abc;
+}
+
+.task1 ul ol ol li:nth-child(3){
+    font-style: italic;
+    color: #fff;
+    background-color: #000;
+}
+
+.task1{
+    visibility: hidden;
+}
+
+.task2 table{
+    border-collapse: collapse;
+    border: 2px solid #000;
+}
+
+.task2 table td,.task2 table th{
+    border: 1px solid #aaa;
+    padding: 10px 20px;
+}
+
+.task2 table th{
+    background-color: #000;
+    color: #fff;
+}
+
+.task2 table thead tr:nth-of-type(2n+1){
+    background-color: #eee;
+}
+
+.task2 table tbody tr:nth-of-type(2n){
+    background-color: #eee;
+}
+
+.task2 table tbody tr:nth-of-type(2n+1){
+    background-color: #fff;
+}
+
+.task2 table tr th:nth-of-type(1){
+    font-style: italic;
+}
+
+.task2{
+    visibility: hidden;
+}
+
+.task3 a:link{
+    color: red;
+}
+
+.task3 a:visited{
+    color: green;
+}
+
+.task3 a:hover{
+    text-decoration-line: none;
+}
+
+.task3 a[href*="contact"]{
+    text-decoration-color: pink;
+}
+
+.task3 a[href^="http"]{
+    border: 1px solid blue;
+}

@@ -1,0 +1,110 @@
+.task1 ul{
+    display: grid;
+    grid-template-columns: 200px 200px 200px 200px;
+}
+
+.task1 ul li{
+    list-style-type: none;
+    height: 150px;
+    line-height: 150px;
+    width: 150px;
+    margin: 20px;
+    text-align: center;
+    
+}
+.task1 ul li:nth-child(n+5){
+    height: 120px;
+    width: 120px;
+    line-height: 120px;
+}
+
+
+.task1 ul li:nth-child(1){
+    border: 5px solid #3DAF7C;
+}
+
+.task1 ul li:nth-child(2){
+    border: 5px double #3DAF7C;
+}
+
+.task1 ul li:nth-child(3){
+    border: 5px dashed #3DAF7C;
+}
+
+.task1 ul li:nth-child(4){
+    border: 5px dotted #3DAF7C;
+}
+
+.task1 ul li:nth-child(5){
+    border: 20px groove #3DAF7C;
+}
+
+.task1 ul li:nth-child(6){
+    border: 20px ridge #3DAF7C;
+}
+
+.task1 ul li:nth-child(7){
+    border: 20px inset #3DAF7C;
+}
+
+.task1 ul li:nth-child(8){
+    border: 20px outset #3DAF7C;
+}
+
+.task2 p{
+    text-align: center;
+    border: 1px solid #aaa;
+    padding: 15px;
+}
+
+.task2 p:nth-child(2){
+    text-decoration-line: overline;
+}
+
+.task2 p:nth-child(3){
+    text-decoration-line: line-through;
+}
+
+.task2 p:nth-child(4){
+    text-decoration-line: underline;
+}
+
+.task2 p:nth-child(5),.task2 a{
+    text-decoration-line: none;
+    color: #000;
+}
+
+.task2 p:nth-child(6){
+    letter-spacing: 10px;
+}
+
+.task2 p:nth-child(7){
+    font-weight: bold;
+}
+
+.task2 p:nth-child(8){
+    font-style: italic;
+}
+
+.task2 p:nth-child(9){
+    text-transform: uppercase;
+}
+
+.task2 p:nth-child(10){
+    font-size: 20px;
+}
+
+.task2 p:nth-child(11){
+    text-align: right;
+}
+
+.task2 p:nth-child(12){
+    font-size: 2em;
+}
+
+.task2 p:nth-child(13){
+    text-indent: 2em;
+}
+
+
+

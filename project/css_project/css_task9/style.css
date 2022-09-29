@@ -1,0 +1,22 @@
+.task1 .card{
+    width: 400px;
+}
+
+.task1 .card .box{
+    width: 400px;
+    height: 300px;
+    border: 1px solid red;
+    box-sizing: border-box;
+}
+
+.task1 .card .container{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.task1 .card .box img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}

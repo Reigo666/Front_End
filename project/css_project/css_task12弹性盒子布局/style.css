@@ -1,0 +1,34 @@
+
+
+.task1 .gray-wrapper{
+    margin: 0 auto;
+    background-color: #E8E8E8;
+    width: 300px;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.task1 .gray-wrapper .green{
+    width: 100px;
+    height: 100px;
+    background-color: #3EB07C;
+}
+
+
+.task2{
+    text-transform: uppercase;
+    display: flex;
+    justify-content:space-between;
+    border: 1px solid #ddd;
+}
+
+.task2 .nav-wrapper{
+    display: flex;
+}
+
+.task2 .nav-wrapper div,.task2 .contact{
+    padding: 10px 20px;
+}
+

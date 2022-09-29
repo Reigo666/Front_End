@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="task1">
+        <!-- 设备像素比为1时默认使用512x512 -->
+        <img src="https://via.placeholder.com/512" alt="" srcset="https://via.placeholder.com/512,https://via.placeholder.com/768 1.5x,https://via.placeholder.com/1024 2x">
+    </div>
+
+    <div class="task2">
+        <picture>
+            <source media="(max-width: 575px)" srcset="https://via.placeholder.com/512">
+            <source media="(max-width: 960px)" srcset="https://via.placeholder.com/720">
+            <source media="(min-width: 961px)" srcset="https://via.placeholder.com/1024">
+            <img src="user-512w.png" alt="user">
+        </picture>
+    </div>
+</body>
+</html>
