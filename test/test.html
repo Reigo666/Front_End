@@ -30,53 +30,59 @@
 <body>
     <div class="a">以x<span class="b">x中勇春</span><span class="c">x不会范</span>>老</div>
 
-    <table border='1' cellspacing="0" width="700px">
+    <table border="1px" cellspacing="0px">
         <thead>
             <tr>
-                <th>CSS属性名</th>
+                <th>css属性名 </th>
                 <th>功能</th>
                 <th>属性值</th>
             </tr>
         </thead>
-        
         <tbody>
             <tr>
-                <td>list-style-type</td>
-                <td>设置列表符号</td>
+                <td>background-color</td>
+                <td>设置背景颜色</td>
                 <td>
-                    常用值如下：<br>
-                    none:不显示前面的标识（很常用！）<br>
-                    square:实心方块<br>
-                    disc:圆形<br>
-                    decimal:数字<br>
-                    lower-roman:小写罗马字<br>
-                    upper-roman:大写罗马字<br>
-                    lower-alpha:小写字母<br>
-                    upper-alpha:大写字母<br>
+                    符合CSS种颜色规范的值<br>
+                    默认背景颜色是transparent
                 </td>
             </tr>
 
             <tr>
-                <td>list-style-position</td>
-                <td>设置列表符号的位置</td>
+                <td>background-image</td>
+                <td>设置背景图片</td>
+                <td>url(图片的地址)</td>
+            </tr>
+
+            <tr>
+                <td>background-repeat</td>
+                <td>设置背景重复方式</td>
                 <td>
-                    inside：在li的里面<br>
-                    outside：在li的外边<br>
+                    repeat:重复，铺满整个元素，默认值。<br>
+                    repeat-x:只在水平方向重复。<br>
+                    repeat-y:只在垂直方向重复。<br>
+                    no-repeat:不重复。<br>
                 </td>
             </tr>
 
             <tr>
-                <td>list-style-image</td>
-                <td>自定义列表符号</td>
-                <td>url(图片地址)</td>
-            </tr>
+                <td>background-position</td>
+                <td>设置背景图位置</td>
+                <td>
+                    通过关键字设置位置：<br>
+                    写两个值，用空格隔开<br>
+                    水平：left、center、right<br>
+                    垂直：top、center、bottom<br>
+                    如果只写一个值，另一个方向的值取center<br><br>
 
-            <tr>
-                <td>list-style</td>
-                <td>符合属性</td>
-                <td>没有数量、顺序的要求</td>
+                    通过长度指定坐标位置:<br>
+                    以元素左上角，为坐标原点，设置图片左上角的位置。<br>
+                    两个值，分别是x坐标和y坐标。<br>
+                    只写一个值，会被当做x坐标，y坐标取center。<br>
+                </td>
             </tr>
         </tbody>
     </table>
 </body>
 </html>
+

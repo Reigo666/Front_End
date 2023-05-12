@@ -191,4 +191,157 @@ serif：衬线字体  有棱角如楷体 不经常使用
 </tbody>
 </table>
 
+## CSS 表格属性
+1. 边框相关属性（其他元素也能用）：
+<table border="1px" cellspacing="0px">
+<thead>
+    <tr>
+        <td>CSS属性名</td>
+        <td>功能</td>
+        <td>属性值</td>
+    </tr>
+</thead>
+    
+<tbody>
+    <tr>
+        <td>border-width</td>
+        <td>边框宽度</td>
+        <td>CSS中可用的长度值</td>
+    </tr>
+    <tr>
+        <td>border-color</td>
+        <td>边框颜色</td>
+        <td>CSS中可用的颜色值</td>
+    </tr>
+    <tr>
+        <td>border-style</td>
+        <td>边框风格</td>
+        <td>
+            none:默认值<br>
+            solid:实线<br>
+            dashed:虚线<br>
+            dotted:点线<br>
+            double:双实线<br>
+        </td>
+    </tr>
+    <tr>
+        <td>border</td>
+        <td>边框复合属性</td>
+        <td>没有数量、顺序的要求</td>
+    </tr>
+</tbody>
+</table>
 
+2. 表格独有属性（只有table标签才能使用）：
+<table border="1px" cellspacing="0px">
+<thead>
+    <tr>
+        <th>CSS属性名</th>
+        <th>功能</th>
+        <th>属性值</th>
+    </tr>
+</thead>
+
+<tbody>
+    <tr>
+        <td>table-layout</td>
+        <td>设置列宽度</td>
+        <td>
+            auto:自动，列宽根据内容计算（默认值）。<br>
+            fixed:固定列宽，平均分。<br>
+        </td>
+    </tr>
+    <tr>
+        <td>border-spacing</td>
+        <td>单元格间距</td>
+        <td>
+            CSS中可用的长度值。<br>
+            生效的前提：单元格边框不能合并。<br>
+        </td>
+    </tr>
+    <tr>
+        <td>border-collapse</td>
+        <td>合并单元格边框</td>
+        <td>
+            collapse:合并<br>
+            seperate:不合并<br>
+        </td>
+    </tr>
+    <tr>
+        <td>empty-cells</td>
+        <td>隐藏没有内容的单元格</td>
+        <td>
+            show:显示,默认<br>
+            hide:隐藏<br>
+            生效前提：单元格不能合并。
+        </td>
+    </tr>
+    <tr>
+        <td>caption-side</td>
+        <td>设置表格标题位置</td>
+        <td>
+            top:上面(默认值)<br>
+            bottom:在表格下面
+        </td>
+    </tr>
+</tbody>
+</table>
+</body>
+</html>
+
+
+## CSS背景属性
+<table border="1px" cellspacing="0px">
+<thead>
+    <tr>
+        <th>css属性名 </th>
+        <th>功能</th>
+        <th>属性值</th>
+    </tr>
+</thead>
+<tbody>
+    <tr>
+        <td>background-color</td>
+        <td>设置背景颜色</td>
+        <td>
+            符合CSS种颜色规范的值<br>
+            默认背景颜色是transparent
+        </td>
+    </tr>
+    <tr>
+        <td>background-image</td>
+        <td>设置背景图片</td>
+        <td>url(图片的地址)</td>
+    </tr>
+    <tr>
+        <td>background-repeat</td>
+        <td>设置背景重复方式</td>
+        <td>
+            repeat:重复，铺满整个元素，默认值。<br>
+            repeat-x:只在水平方向重复。<br>
+            repeat-y:只在垂直方向重复。<br>
+            no-repeat:不重复。<br>
+        </td>
+    </tr>
+    <tr>
+        <td>background-position</td>
+        <td>设置背景图位置</td>
+        <td>
+            <b>通过关键字设置位置：</b><br>
+            写两个值，用空格隔开<br>
+            水平：left、center、right<br>
+            垂直：top、center、bottom<br>
+            如果只写一个值，另一个方向的值取center<br><br>
+            <b>通过长度指定坐标位置:</b><br>
+            以元素左上角，为坐标原点，设置图片左上角的位置。<br>
+            两个值，分别是x坐标和y坐标。<br>
+            只写一个值，会被当做x坐标，y坐标取center。<br>
+        </td>
+    </tr>
+    <tr>
+        <td>background</td>
+        <td>复合属性</td>
+        <td>没有数量和顺序要求</td>
+    </tr>
+</tbody>
+</table>
