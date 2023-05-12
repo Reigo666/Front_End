@@ -113,3 +113,82 @@ serif：衬线字体  有棱角如楷体 不经常使用
     4.百分比：参考自身`font-size`的百分比。
 - 备注：由于字体设计原因，文字在一行中，并不是绝对垂直居中，若一行中都是文字，不会太影响观感。
 
+- 行高注意事项：
+    1. line-height过小会怎样？--文字产生重叠，且最小值是0，不能为负数。
+    2. line-height是可以继承的，且为了能更好的呈现文字，最好写数值。
+    3. line-height和height是什么关系?
+        - 设置了height，那么高度就是height的值。
+        - 不设置height的时候，会根据line-height计算高度。
+- 应用场景：
+    1. 对于多行文字：控制行与行之间的距离。
+    2. 对于单行文字：让height等于line-height，可以实现文字垂直居中。
+
+## 文本对齐_垂直
+1. 顶部：无需任何属性，在垂直方向上，默认就是顶部对齐。
+2. 居中：对于单行文字，让height=line-height即可
+> 问题：多行文字垂直居中怎么办？--后面我们用定位去做
+3. 底部：对于单行文字，目前一个临时的方式：
+    让`line-height`=(`height`x`2`)-`font-size`-`x`
+    备注：`x`是根据字体族，动态决定的一个值。
+> 问题：垂直方向上的底部对齐，更好的解决办法是什么？--后面我们用定位去做。
+
+## vertical-align
+- 属性名：vertical-align。
+- 作用：用于指定<font color='red'>同一行元素之间</font>,或<font color='red'>表格单元格</font>内文字的<font color='red'>垂直对齐方式</font>。
+- 常用值：
+    1. `baseline`(默认值)：使元素的基线与父元素的基线对齐。
+    2. `top`：使元素的顶部与其所在行的顶部对齐。
+    3. `middle`：使元素的中部与父元素的基线加上父元素字母x的一半对齐。
+    4. `bottom`：使元素的底部与其所在行的底部对齐。
+> 特别注意：vertical-align不能控制块元素。
+
+## CSS列表属性
+列表相关的属性，可以作用在`ul`,`ol`,`li`元素上。
+
+<table border='1' cellspacing="0" width="700px">
+<thead>
+    <tr>
+        <th>CSS属性名</th>
+        <th>功能</th>
+        <th>属性值</th>
+    </tr>
+</thead>
+
+<tbody>
+    <tr>
+        <td>list-style-type</td>
+        <td>设置列表符号</td>
+        <td>
+            常用值如下：<br>
+            none:不显示前面的标识（很常用！）<br>
+            square:实心方块<br>
+            disc:圆形<br>
+            decimal:数字<br>
+            lower-roman:小写罗马字<br>
+            upper-roman:大写罗马字<br>
+            lower-alpha:小写字母<br>
+            upper-alpha:大写字母<br>
+        </td>
+    </tr>
+    <tr>
+        <td>list-style-position</td>
+        <td>设置列表符号的位置</td>
+        <td>
+            inside：在li的里面<br>
+            outside：在li的外边<br>
+        </td>
+    </tr>
+    <tr>
+        <td>list-style-image</td>
+        <td>自定义列表符号</td>
+        <td>url(图片地址)</td>
+    </tr>
+    <tr>
+        <td>list-style</td>
+        <td>符合属性</td>
+        <td>没有数量、顺序的要求</td>
+    </tr>
+</tbody>
+</table>
+
+
