@@ -6,29 +6,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        .a{
-            
+        .outer{
+            width: 400px;
+            height: 400px;
+            background-color: gray;
+            text-align: center;
+            line-height: 400px;
+            font-size: 0px;
+        }
+
+        .inner{
+            font-size: 20px;
             background-color: orange;
-            font-size: 100px;
-            line-height: 100px;
+            vertical-align: middle;
         }
 
-        .b{
-            background-color: gray;
-            font-size: 25px;
-            vertical-align: top;
+        img{
+            width: 100px;
+            height: 100px;
+            vertical-align: middle;
         }
-
-        .c{
-            background-color: gray;
-            font-size: 25px;
-            vertical-align: bottom;
-        }
-
     </style>
 </head>
 <body>
-    <div class="a">以x<span class="b">x中勇春</span><span class="c">x不会范</span>>老</div>
+    <div class="outer">
+        <span class="inner">出来玩啊！x</span>
+        <img src="./海关.jpg" alt="">
+    </div>
+
+
 
     <table border="1px" cellspacing="0px">
         <thead>
