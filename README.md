@@ -345,3 +345,64 @@ serif：衬线字体  有棱角如楷体 不经常使用
     </tr>
 </tbody>
 </table>
+
+## CSS鼠标属性
+<table border="1px" cellspacing="0px">
+<thead>
+    <tr>
+        <th>css属性名 </th>
+        <th>功能</th>
+        <th>属性值</th>
+    </tr>
+</thead>
+<tbody>
+    <tr>
+        <td>cursor</td>
+        <td>设置鼠标光标的样式</td>
+        <td>
+            pointer：小手<br>
+            move：移动光标<br>
+            text：文字选择器<br>
+            crosshair：十字架<br>
+            wait：等待<br>
+            help：帮助<br>
+        </td>
+    </tr>
+</tbody>
+</table>
+
+> 扩展：自定义鼠标图案
+>
+> /* 自定义鼠标光标 */
+> cursor:url('./arrow.png'),pointer;
+
+# 五、CSS盒子模型
+## 1.CSS长度单位
+1. px：像素
+2. em：相对元素font-size的倍数
+3. rem：相对根字体大小，html标签就是根。
+4. %：相对父元素计算
+> 注意：CSS中设置长度，必须加单位，否则样式无效！
+
+## 2.元素的显示模式
+- **块元素（block）**
+> 又称:块级元素
+> 特点:
+> 1. 在页面中<font color='red'>独占一行</font>,不会与任何元素共用一行,是从上到下排列的.
+> 2. 默认宽度:撑满<font color='red'>父元素</font>.
+> 3. 默认高度:由<font color='red'>内容</font>撑开.
+> 4. <font color='red'>可以</font>通过CSS设置宽高.
+- **行内元素（inline）**
+> 又称:内联元素
+> 特点:
+> 1. 在页面中<font color='red'>不独占一行</font>,一行中不能容纳下的行内元素,会在下一行继续从左到右排列.
+> 2. 默认宽度:由<font color='red'>内容</font>撑开.
+> 3. 默认高度:由<font color='red'>内容</font>撑开.
+> 4. <font color='red'>无法</font>通过CSS设置宽高.
+- **行内块元素（inline-block）**
+> 又称:内联块元素
+> 特点:
+> 1. 在页面中<font color='red'>不独占一行</font>,一行中不能容纳下的行内元素,会在下一行继续从左到右排列.
+> 2.默认宽度,由<font color='red'>内容</font>撑开.
+> 3.默认高度,由<font color='red'>内容</font>撑开.
+> 4.<font color='red'>可以</font>通过CSS设置宽高.
