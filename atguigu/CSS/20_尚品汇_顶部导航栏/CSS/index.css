@@ -1,0 +1,61 @@
+/* #region 基础设置 */
+body{
+    font-family: "PingFang SC",serif;
+}
+
+.container{
+    width: 1190px;
+    margin: 0 auto;
+}
+/* #endregion 基础设置 */
+
+
+
+/* #region topbar */
+.topbar{
+    height: 30px;
+    line-height: 30px;
+    background-color: #ECECEC;
+    color: #666666;
+
+}
+
+.topbar-left{
+    font-size: 0;
+}
+
+.topbar-left span,.topbar-left a{
+    font-size: 12px;
+}
+
+.topbar-left span:first-of-type{
+    margin-right: 28px;
+}
+
+.topbar-left a:first-of-type{
+    border-right: 1px solid #666666;
+    padding-right: 10px;
+}
+
+.topbar-left a:last-of-type{
+    padding-left: 10px;
+}
+
+.topbar-right ul li{
+    float: left;
+}
+
+.topbar-right ul li a{
+    border-right: 1px solid #666666;
+    padding:0 15px;
+}
+
+.topbar-right ul li:first-child a{
+    padding-left: 0;
+}
+
+.topbar-right ul li:last-child a{
+    padding-right: 0;
+    border: none;
+}
+/* #endregion topbar */
