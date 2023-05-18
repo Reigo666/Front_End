@@ -406,3 +406,90 @@ serif：衬线字体  有棱角如楷体 不经常使用
 > 2.默认宽度,由<font color='red'>内容</font>撑开.
 > 3.默认高度,由<font color='red'>内容</font>撑开.
 > 4.<font color='red'>可以</font>通过CSS设置宽高.
+
+## 4.修改元素现实模式
+通过CSS中的display属性可以修改元素的默认显示模式，常用值如下:
+| 值           | 描述            |
+| ------------ | --------------- |
+| none         | 元素会被**隐藏** |
+| block        | 元素作为**块级元素**显示 |
+| inline       | 元素将作为**内联元素**显示 |
+| inline-block | 元素将作为**行内块元素**显示 |
+
+## 5.盒子模型的组成
+CSS会把所有的HTML元素都看成一个盒子，所有的样式也都是基于这个盒子。
+1. **margin(外边距)：**盒子与外界的距离。
+2. **border(边框)：**盒子的边框。
+3. **paddng(内边距)：**紧贴内容的补白区域。
+4. **content(内容)：**元素中的文本或后代元素都是它的内容。
+
+**盒子的大小**=`content`+**左右**`padding`+**左右**`border`。
+
+> 注意：外边距margin不会影响盒子的大小，但会影响盒子的位置。
+
+## 6.盒子内容区（content）
+CSS属性名|功能|属性值
+--|--|--
+`width`|设置内容区域宽度|长度
+`max-width`|设置内容区域的最大宽度|长度
+`min-width`|设置内容区域的最小宽度|长度
+`height`|设置内容区域的高度|长度
+`max-height`|设置内容区域的最大高度|长度
+`min-height`|设置内容区域的最小高度|长度
+
+> 注意
+> `max-width`、`min-width`一般不与`width`一起使用。
+> `max-height`、`min-height`一般不与`height`一起使用。
+
+## 7.关于块元素默认宽度
+所谓的默认宽度，就是`不设置width属性时`，元素所呈现出来的宽度。<br>
+**盒子总宽度**=父的`content`-自身的左右`margin`。<br>
+**内容区的宽度**=父的`content`-自身的左右`margin`-自身的左右`border`-自身的左右`padding`。
+
+## 8.盒子内边距（padding）
+CSS属性名|功能|属性值
+--|--|--
+`padding-top`|上内边距|长度
+`padding-right`|右内边距|长度
+`padding-bottom`|下内边距|长度
+`padding-left`|左内边距|长度
+`padding`|复合属性|长度，可以设置1-4个值
+
+padding复合属性的使用规则：
+1. `padding: 10px`; 四个方向内边距都是`10px`。
+2. `padding: 10px 20px`; 上下`10px`，左右`20px`。（上下、左右）
+3. `padding: 10px 20px 30px`; 上`10px`，左右`20px`，下`30px`。（上、左右、下）
+4. `padding: 10px 20px 30px 40px`; 上`10px`，右`20px`，右`30px`，左`40px`。（上、右、下、左）
+
+> 注意点：
+> 1. `padding`的值不能为负数
+> 2. **行内元素**的左右内边距是没问题的，上下内边距不能完美的设置。
+> 3. **块级元素、行内块元素**，四个方向**内边距**都可以完美设置。
+
+## 9.盒子边框（border）
+CSS属性名|功能|属性值
+--|--|--
+`border-style`|边框线风格<br>复合了四个方向的边框风格|`none`:默认值<br> `solid`:实线<br> `dashed`:虚线<br> `dotted`:点线<br> `double`:双实线<br> ......
+`border-width`|边框线宽度<br>复合了四个方向的边框宽度|长度，默认3px
+`border-color`|边框线颜色<br>复合了四个方向的边框颜色|颜色，默认黑色
+`border`|复合属性|值没有顺序和数量要求。
+`border-left`<br>`border-left-style`<br>`border-left-width`<br>`border-left-color`<br><br> `border-right`<br>`border-right-style`<br>`border-right-width`<br>`border-right-color`<br><br> `border-top`<br>`border-top-style`<br>`border-top-width`<br>`border-top-color`<br><br> `border-bottom`<br>`border-bottom-style`<br>`border-bottom-width`<br>`border-bottom-color`<br> |分别设置各个方向的边框|同上
+
+> 边框相关属性共20个。
+> border-style、border-width、border-color其实也是复合属性。
+
+## 10.盒子外边距（margin）
+CSS属性名|功能|属性值
+--|--|--
+`margin-left`|左外边距|CSS中的长度值
+`margin-right`|右外边距|CSS中的长度值
+`margin-top`|上外边距|CSS中的长度值
+`margin-bottom`|下外边距|CSS中的长度值
+`margin`|复合属性，可以写1~4个值，规律同padding|CSS中的长度值
+
+### 10.1margin注意事项
+> 1. 子元素的`margin`，是参考父元素的`content`计算的。（因为是父亲的`content`中承装着子元素）
+> 2. 上`margin`、左`margin`：影响自己的位置；下``margin``、右`margin`：影响后面兄弟元素的位置。
+> 3. 块级元素、行内块元素、均可以完美地设置四个方向的`margin`；但行内元素，左右`margin`可以完美设置，上下`margin`设置无效。
+> 4. `margin`的值也可以是`auto`，如果给一个**块级元素**设置左右`margin`都为`auto`，该块级元素会在父亲元素中水平居中。
+> 5. `margin`的值可以是负值。
