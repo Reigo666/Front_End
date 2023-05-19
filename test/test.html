@@ -9,86 +9,32 @@
         .outer{
             width: 400px;
             height: 400px;
+            line-height: 400px;
             background-color: gray;
             text-align: center;
-            line-height: 400px;
-            font-size: 0px;
         }
 
         .inner{
-            font-size: 20px;
+            font-size: 12px;
             background-color: orange;
-            vertical-align: middle;
-        }
+            
+            
+        }   
 
         img{
             width: 100px;
             height: 100px;
+            
             vertical-align: middle;
         }
     </style>
 </head>
 <body>
-    <div class="outer">
-        <span class="inner">出来玩啊！x</span>
-        <img src="./海关.jpg" alt="">
+    <div style="border: 1px solid black; width: 100px;">
+        <div style="width: 20px;height: 20px;background-color: skyblue; margin: 10px; float: right;">1</div>
+        <div style="width: 20px;height: 20px;background-color: skyblue; margin: 10px;">2</div>
+        <div style="width: 20px;height: 20px;background-color: skyblue; margin: 10px;">3</div>
     </div>
-
-
-
-    <table border="1px" cellspacing="0px">
-        <thead>
-            <tr>
-                <th>css属性名 </th>
-                <th>功能</th>
-                <th>属性值</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>background-color</td>
-                <td>设置背景颜色</td>
-                <td>
-                    符合CSS种颜色规范的值<br>
-                    默认背景颜色是transparent
-                </td>
-            </tr>
-
-            <tr>
-                <td>background-image</td>
-                <td>设置背景图片</td>
-                <td>url(图片的地址)</td>
-            </tr>
-
-            <tr>
-                <td>background-repeat</td>
-                <td>设置背景重复方式</td>
-                <td>
-                    repeat:重复，铺满整个元素，默认值。<br>
-                    repeat-x:只在水平方向重复。<br>
-                    repeat-y:只在垂直方向重复。<br>
-                    no-repeat:不重复。<br>
-                </td>
-            </tr>
-
-            <tr>
-                <td>background-position</td>
-                <td>设置背景图位置</td>
-                <td>
-                    通过关键字设置位置：<br>
-                    写两个值，用空格隔开<br>
-                    水平：left、center、right<br>
-                    垂直：top、center、bottom<br>
-                    如果只写一个值，另一个方向的值取center<br><br>
-
-                    通过长度指定坐标位置:<br>
-                    以元素左上角，为坐标原点，设置图片左上角的位置。<br>
-                    两个值，分别是x坐标和y坐标。<br>
-                    只写一个值，会被当做x坐标，y坐标取center。<br>
-                </td>
-            </tr>
-        </tbody>
-    </table>
 </body>
 </html>
 

@@ -407,11 +407,30 @@ serif：衬线字体  有棱角如楷体 不经常使用
 > 3.默认高度,由<font color='red'>内容</font>撑开.
 > 4.<font color='red'>可以</font>通过CSS设置宽高.
 
+## 3.总结各元素的显示模式
+- 块元素（block）
+> 1. 主体结构标签：\<html>、\<body>
+> 2. 排版标签：\<h1>、\<h6>、\<hr>、\<p>、\<pre>、\<div>
+> 3. 列表标签：\<ul>、\<ol>、\<li>、\<dl>、\<dt>、\<dd>
+> 4. 表格相关标签：\<table>、\<tbody>、\<thead>、\<tfoot>、\<tr>、\<caption>
+> 5. \<form>与\<option>
+
+- 行内元素（inline）
+> 1.文本标签：\<span>、\<br>、\<em>、\<strong>、\<sup>、\<sub>、\<del>、\<ins>
+> 2.\<a>与\<label>
+- 行内块元素（inline-block）
+> 1. 图片：\<img>
+> 2. 单元格：\<td>、\<th>
+> 3. 表单控件：\<input>、\<textarea>、\<select>、\<button>
+> 4. 框架标签：\<iframe>
+
+
+
 ## 4.修改元素现实模式
 通过CSS中的display属性可以修改元素的默认显示模式，常用值如下:
 | 值           | 描述            |
 | ------------ | --------------- |
-| none         | 元素会被**隐藏** |
+| none         | 元素会被**隐藏**,不占用宽高和大小 |
 | block        | 元素作为**块级元素**显示 |
 | inline       | 元素将作为**内联元素**显示 |
 | inline-block | 元素将作为**行内块元素**显示 |
@@ -487,9 +506,133 @@ CSS属性名|功能|属性值
 `margin-bottom`|下外边距|CSS中的长度值
 `margin`|复合属性，可以写1~4个值，规律同padding|CSS中的长度值
 
-### 10.1margin注意事项
+### 10.1 margin注意事项
 > 1. 子元素的`margin`，是参考父元素的`content`计算的。（因为是父亲的`content`中承装着子元素）
 > 2. 上`margin`、左`margin`：影响自己的位置；下``margin``、右`margin`：影响后面兄弟元素的位置。
 > 3. 块级元素、行内块元素、均可以完美地设置四个方向的`margin`；但行内元素，左右`margin`可以完美设置，上下`margin`设置无效。
 > 4. `margin`的值也可以是`auto`，如果给一个**块级元素**设置左右`margin`都为`auto`，该块级元素会在父亲元素中水平居中。
 > 5. `margin`的值可以是负值。
+
+### 10.2 margin塌陷问题
+**什么是`margin`塌陷？**
+&nbsp;&nbsp;&nbsp;&nbsp;第一个子元素的**上**`margin`会作用在父元素上，最后一个子元素的**下**`margin`会作用在父元素上。
+**如何解决`margin`塌陷？**
+- 方案一：给父元素设置不为0的`padding`。
+- 方案二：给父元素设置宽度不为0的`border`。
+- 方案三：给父元素设置CSS样式`overflow:hidden`
+
+### 10.3 margin合并问题
+**什么是`margin`合并？**
+&nbsp;&nbsp;&nbsp;&nbsp;上面兄弟元素的下外边距和下面兄弟元素的上外边距会合并，取一个最大的值，而不是相加。
+**如何解决`margin`合并？**
+&nbsp;&nbsp;&nbsp;&nbsp;无需解决，布局的时候上下的兄弟元素，只给一个设置上下外边距就可以了。
+
+## 11.处理内容溢出
+CSS属性名|功能|属性值
+--|--|--
+`overflow`|溢出内容的处理方式|`visible`：显示，默认值<br> `hidden`：隐藏<br> `scroll`：显示滚动条，不论内容是否溢出<br> `auto`:自动显示滚动条，内容不溢出不显示
+`overflow-x`|水平方向溢出内容的处理方式|同`overflow`
+`overflow-y`|垂直方向溢出内容的处理方式|+同`overflow`
+
+> 注意：
+> 1. `overflow-x`、`overflow-y`不能一个是`hidden`,一个是`visible`，是实验性属性，不建议使用。
+> 2. `overflow`常用的值是`hidden`和`auto`,除了能处理溢出的显示方式，还可以解决很多疑难杂症。
+
+## 12.隐藏元素的方式
+**方式一：visibility属性**
+`visability`属性默认值是`show`，如果设置为`hidden`，元素会隐藏。
+元素看不见，还占有原来的位置（元素的大小依然保持）。
+**方式二：display属性**
+设置`display：none`，就可以让元素隐藏。
+彻底地隐藏，不但看不见，也不占用任何位置，没有大小宽高。
+
+## 13.样式的继承
+有些样式会继承，元素如果本身设置了某个样式，就使用本身设置的样式；但如果本身没有设置某个样式，会从父元素开始一级一级继承（优先继承离得近的祖先元素）。
+**会继承的CSS属性**
+> 字体属性、文本属性（除了vertical-align）、文字颜色 等。
+
+**不会继承的CSS属性**
+
+> 边框、背景、内边距、外边距、宽高、溢出方式 等。
+> 
+> 一个规律：能继承的属性，都是不影响布局的，简单说：都是和盒子模型没关系的。
+
+## 14.默认样式
+元素一般都有些默认的样式，例如：
+1. \<a>元素：下划线、字体颜色、鼠标小手。
+2. \<h1>-\<h6>元素：文字加粗、文字大小、上下外边距。
+3. \<p>元素：上下外边距
+4. \<ul>、\<ol>元素：左内边距
+5. `body`元素：`8px`外边距（4个方向）
+······
+优先级：元素的默认样式 > 继承的样式，所以如果要重置元素的默认样式，选择器一定要直接选择器到该元素。
+
+## 15.布局小技巧
+1. 行内元素、行内块元素，可以被父元素当做文本处理。
+> 即：可以像处理文本对齐一样，去处理：行内、行内块在父元素中的对齐。
+> 例如：`text-align`、`line-height`、`text-indent`等。
+
+2. 如何让子元素，在父亲中 <font color='red'>水平居中</font>：
+- 若子元素为<font color='blue'>块元素</font>，给父元素加上：`margin:0 auto`;。
+- 若子元素为<font color='blue'>行内元素、行内块元素</font>，给父元素加上：`text-align：center`。
+
+3. 如何让子元素，在父亲中 垂直居中：
+- 若子元素为<font color='blue'>块元素</font>，给子元素加上：`margin-top`，值为：（父元素`content`-子元素盒子总高）/2。
+- 若子元素为<font color='blue'>行内元素、行内块元素</font>：
+让父元素的`height`=`line-height`，每个子元素都加上：`vertical-align:middle`;。<br>
+补充：若想绝对垂直居中，父元素`font-size`设置为`0`。
+
+## 16.元素之间的空白问题
+**产生的原因**：
+&nbsp;&nbsp;&nbsp;&nbsp;行内元素、行内块元素，彼此之间的换行被浏览器解析为一个空白字符。
+**解决方案**：
+1. **方案一**：去掉换行和空格（不推荐）。
+2. **方案二**：给父元素设置`font-size：0`,再给需要显示文字的元素，单独设置字体大小（推荐）。
+
+## 17.行内块的幽灵空白问题
+**产生原因：**
+&nbsp;&nbsp;&nbsp;&nbsp;行内块元素与文本的基线对齐，而文本的基线与文本最底端之间是有一定距离的。
+**解决方案：**
+1. **方案一：** 给行内块设置`vertical`，值不为`baseline`即可，设置为`middle`、`bottom`、`top`均可。
+2. **方案二：** 若父元素中只有一张图片，设置图片为`display：block`。
+3. **方案三：** 给父元素设置`font-size:0`。如果该行内块内部还有文本，则需单独设置`font-size`。
+
+# 六、浮动
+## 1.浮动的简介
+在最初，浮动是用来实现文字环绕图片效果的，现在浮动是主流的页面布局方式之一。
+
+## 2.元素浮动后的特点
+1. 脱离文档流。
+2. 不管浮动前是什么元素，浮动后：默认宽与高都是被内容撑开（尽可能小），而且可以设置宽高。
+3. 不会独占一行，可以与其他元素共用一行。
+4. 不会`margin`合并，也不会`margin`塌陷，能够完美的设置四个方向的`margin`和`padding`。
+5. 不会像行内块一样被当做文本处理（没有行内块的空白问题）。
+
+## 3.浮动小练习
+练习1：盒子1右浮动，效果如下
+<div style="border: 1px solid black; width: 120px;">
+    <div style="width: 20px;height: 20px;background-color: skyblue; margin: 10px; float: right;">1</div>
+    <div style="width: 20px;height: 20px;background-color: skyblue; margin: 10px;">2</div>
+    <div style="width: 20px;height: 20px;background-color: skyblue; margin: 10px;">3</div>
+</div>
+练习2：盒子1左浮动，效果如下
+<div style="border: 1px solid black; width: 120px;">
+    <div style="width: 20px;height: 20px;background-color: skyblue; margin: 10px; float: left;">1</div>
+    <div style="width: 20px;height: 20px;background-color: skyblue; margin: 10px;">2</div>
+    <div style="width: 20px;height: 20px;background-color: skyblue; margin: 10px;">3</div>
+</div>
+练习3：所有盒子都浮动，效果如下
+<div style="border: 1px solid black; width: 120px;">
+    <div style="width: 20px;height: 20px;background-color: skyblue; margin: 10px; float: left;">1</div>
+    <div style="width: 20px;height: 20px;background-color: skyblue; margin: 10px; float: left;">2</div>
+    <div style="width: 20px;height: 20px;background-color: skyblue; margin: 10px; float: left;">3</div>
+</div>
+<div style="clear:both"></div>
+
+练习4：所有盒子浮动后，盒子3落下来，效果如下
+<div style="border: 1px solid black; width: 100px;">
+    <div style="width: 20px;height: 20px;background-color: skyblue; margin: 10px; float: left;">1</div>
+    <div style="width: 20px;height: 20px;background-color: skyblue; margin: 10px; float: left;">2</div>
+    <div style="width: 20px;height: 20px;background-color: skyblue; margin: 10px; float: left;">3</div>
+</div>
+<div style="clear:both"></div>
