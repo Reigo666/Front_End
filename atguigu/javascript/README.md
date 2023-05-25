@@ -8,6 +8,14 @@
 ## typeof 检查标签
 返回的结果是字符串形式
 
+## instanceof 检查标签
+检查一个对象是否是一个类的实例
+```js
+console.log(person instance of Person) //true
+console.log(dog instance of Person) //false
+console.log(person instance of Object) //true 任何对象都是object的后代
+```
+
 ## 输出unicode编码
 1. js中使用 \u2620 (16进制编码)
 2. html中使用 \&#9760; &#9760;(转换为10进制编码)
@@ -338,8 +346,9 @@ fun6();
 
 ## 5.5 this
 解析器在调用函数每次都会向函数内部传递一个隐含的参数this,this指向的是一个对象，这个对象我们称为函数执行的**上下文对象**。
-1. 以**函数**的形式调用时,this永远都是window
-2. 以**方法**的形式调用时，this就是调用方法的那个对象
+1. 以**函数**的形式调用时,this永远都是window。
+2. 以**方法**的形式调用时，this就是调用方法的那个对象。
+3. 当以构造函数的形式调用时，this就是新创建的那个对象。
 
 ```js
 var name='全局作用域的name';
@@ -353,4 +362,98 @@ var obj={
 
 fun() // -> '全局作用域的name' 即this=window
 obj.sayName() // -> 'zhangsan' 即this=obj
+```
+
+## 5.6 使用工厂方法创建对象
+```js
+function createPerson(name,age){
+    // 创建一个新的对象
+    var obj=new Object();
+    // 向对象中添加属性
+    obj.name=name
+    obj.age=age
+    // 将新的对象返回
+    return obj
+}
+
+var obj1=createPerson('zhangsan',18)
+```
+## 5.7 构造函数
+- 构造函数和普通函数的区别就是调用方式的不同
+- 普通函数就是直接调用，而构造函数需要使用new关键字来调用
+- 构造函数的执行流程：
+  1. 立刻创建一个新的对象
+  2. 将新建对象设置为函数中this，在构造函数中可以使用this来引用新建的对象
+  3. 逐行执行函数中的代码
+  4. 将新建的对象(this)作为返回值返回
+- 使用同一个构造函数创建的对象，我们称为一类对象，也将一个构造函数称为一个类。
+- 我们将通过一个构造函数创建的对象，称为是该类的实例
+
+```js
+function Person(name,age){
+    this.name=name
+    this.age=age
+}
+
+var person=new Person()
+console.log(person instanceof Person)
+```
+
+## 5.8 原型
+### 5.8.1 prototype和__proto__
+- 我们所创建的每一个函数，解析器都会向函数中添加一个属性`prototype`。这个属性对应着一个对象，这个对象就是我们所谓的原型对象。
+- 如果函数作为普通函数调用`prototype`没有任何作用
+- 当函数以构造函数的形式调用时，它所创建的对象中都会有一个隐含的属性，指向该构造函数的原型对象，我们可以通过`__proto__`来访问该属性。
+- 原型对象就相当于一个公共的区域，所有同一个类的实例都可以访问到这个原型对象，我们可以将对象中共有的内容，统一设置到原型对象中。
+- 当我们访问对象的一个属性或方法时，它会先在对象自身中寻找，如果有则直接使用，如果没有则会去原型对象中寻找，如果找到则直接使用。
+- 直到找到Object的原型对象<br>
+![prototype](https://img-blog.csdnimg.cn/2aba7ed4371741639cdf3dc0fd08b368.png#pic_center)
+```js
+// prototype 和 __proto__
+function Person(name,age){
+    this.name=name
+    this.age=age
+}
+
+// 向Person的原型中添加一个方法
+Person.prototype.sayName=function(){
+    console.log(this.name)
+}
+
+// 创建一个实例
+var p1=new Person('zhangsan',18)
+var p2=new Person('lisi',22)
+
+// 调用实例的方法，会在person的__proto__中寻找（即Person的prototype）
+p1.sayName()
+p2.sayName()
+
+console.log(p1.__proto__ == Person.prototype) // -> True
+```
+> `Person`的`prototype` 和 `person`的`__proto__`均指向**Person的原型对象**<br>
+> 原型对象中保存一些公共的属性和方法。
+### 5.8.2 原型对象案例
+```js
+function MyClass(){
+
+}
+MyClass.prototype.name="我是原型对象中的name";
+var mc=new MyClass();
+
+// 使用in检查对象中是否含有某个属性时，如果对象中没有但是原型中有，也会返回true
+console.log('name' in MyClass)//-> true
+console.log('name' in mc)//-> true
+
+// 可以使用对象的hasOwnProperty()来检查对象自身是否含有该属性
+console.log(mc.hasOwnProperty('name')); // -> false
+console.log(mc.__proto__.hasOwnProperty('name'));// -> true 原型中含有name属性
+
+// 判断hasOwnProperty方法的位置
+// hasOwnProperty在Object的原型上 | Person的原型的原型上
+console.log(mc.__proto__.hasOwnProperty('hasOwnProperty')); // -> false
+console.log(mc.__proto__.__proto__.hasOwnProperty('hasOwnProperty'));// -> true
+
+// Person的原型的原型的原型为null
+console.log(mc.__proto__.__proto__.__proto__); // -> null
+
 ```
