@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <style>
+    * { 
+        font-family: Arial; 
+        font-size: 14px; 
+        margin: 0; 
+        padding: 0; 
+        border: none; 
+    }
+    a { text-decoration: none; }
+    ul { list-style: none; }
+
+    html,body{
+        height: 100%;
+        width: 100%;
+    }
+
+    body{
+        background-image: url(./imgs/bg.jpg);
+        background-size: cover;
+    }
+
+    .page-header{
+        height: 70px;
+        background-color: rgba(0, 0, 0, 0.7);
+        padding: 0 20px;
+        /* display: none; */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .header-nav{
+        display: flex;
+
+    }
+    .header-nav li>a{
+        color: white;
+        border: 1px solid white;
+        border-radius: 8px;
+        padding: 10px;
+        margin-right: 20px;
+        
+    }
+    .header-nav li:last-child a{
+        margin: 0;
+    }
+
+    .page-content{
+        
+        height: calc(100vh - 70px);
+        display: flex;
+        /* margin: 0 auto;
+        margin-top: calc(100vh-70px); */
+    }
+
+    .content-nav{
+        height: 300px;
+        width: 1000px;
+        /* background-color: skyblue; */
+        /* position: absolute;
+        top: 70px;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto; */
+        margin: auto;
+
+        display: flex;
+        
+        justify-content: space-evenly;
+        align-items: center;
+    }
+    .content-nav li{
+        width: 180px;
+        height: 200px;
+        /* background-color: orange; */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+        transition: 0.2s linear;
+        cursor: pointer;
+    }
+    .content-nav li:hover{
+        box-shadow: 0 0 20px black;
+        transform: translate(0,-10px) scale(1.05);
+    }
+
+
+    .content-nav li span{
+        font-size: 16px;
+        color: white;
+    }
+    
+    .content-nav li:nth-child(1){
+        background-color: #595CA8;
+        /* 
+            #595CA8;
+            #FF9D2E;
+            #01A6DE;
+            #015E91;
+            #1DC128;
+            #01A6DE;
+        */
+    }
+    .content-nav li:nth-child(2){
+        background-color: #FF9D2E;
+    }
+    .content-nav li:nth-child(3){
+        background-color: #01A6DE;
+    }
+    .content-nav li:nth-child(4){
+        background-color: #015E91;
+    }
+    .content-nav li:nth-child(5){
+        background-color: #1DC128;
+    }
+
+    </style>
+</head>
+<body>
+    <header class="page-header">
+        <a href="#">
+            <img src="./imgs/logo.png" alt="icon">
+        </a>
+        <ul class="header-nav">
+            <li><a href="#">国内校区</a></li>
+            <li><a href="#">缅甸校区</a></li>
+            <li><a href="#">非洲校区</a></li>
+            <li><a href="#">美国校区</a></li>
+        </ul>
+    </header>
+
+    <div class="page-content">
+        <ul class="content-nav">
+            <li>
+                <img src="./imgs/item1.png" alt="">
+                <span>我的邮箱</span>
+            </li>
+            <li>
+                <img src="./imgs/item2.png" alt="">
+                <span>云服务</span>
+            </li>
+            <li>
+                <img src="./imgs/item3.png" alt="">
+                <span>手机课堂</span>
+            </li>
+            <li>
+                <img src="./imgs/item4.png" alt="">
+                <span>微信服务</span>
+            </li>
+            <li>
+                <img src="./imgs/item5.png" alt="">
+                <span>在线客服</span>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
