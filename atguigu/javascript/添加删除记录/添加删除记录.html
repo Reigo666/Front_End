@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <style>
+        table{
+            border-collapse: collapse;
+            margin: 0 auto;
+        }
+        th,td{
+            border: 1px solid black;
+        }
+        form{
+            width: 300px;
+            margin: 0 auto;
+            text-align: center;
+            border: 1px solid black;
+            margin-top: 40px;
+            padding: 10px;
+        }
+
+        form div:first-child{
+            text-align: left;
+            height: 40px;
+            line-height: 40px;
+            font-weight: bold;
+        }
+    </style>
+
+    <script>
+        function deleteA(){
+            var a=this;
+            var tr=a.parentNode.parentNode;
+            // console.log(tr);
+            var flag=confirm('确认删除么?');
+            if(flag)tr.parentNode.removeChild(tr);
+        }
+        window.onload=function(){
+            var allA=document.getElementsByTagName('a');
+            
+            // 为每个Delete添加删除行为
+            for(var i=0;i<allA.length;i++){
+                elem=allA[i];
+                elem.onclick=deleteA
+            }
+
+            // 为提交按钮添加点击事件 (添加一个人到表格中)
+            var submit=document.getElementById('submit');
+            submit.onclick=function(event){
+                event.preventDefault();
+                var name=document.getElementById('name').value;
+                var email=document.getElementById('email').value;
+                var salary=document.getElementById('salary').value;
+                var tr=document.createElement('tr');
+    
+                tr.innerHTML='<td>'+name+'</td>\
+                            <td>'+email+'</td>\
+                            <td>'+salary+'</td>\
+                            <td><a href="#">Delete</a></td>'
+                
+                var a=tr.lastElementChild.firstElementChild
+                a.onclick=deleteA;
+                var tbody=document.getElementsByTagName('tbody')[0];
+                tbody.appendChild(tr);
+        
+            }
+
+        }
+    </script>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Salary</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>Tom</td>
+                <td>tom@tom.com</td>
+                <td>5000</td>
+                <td><a href="#">Delete</a></td>
+            </tr>
+            <tr>
+                <td>Jerry</td>
+                <td>jerry@sohu.com</td>
+                <td>8000</td>
+                <td><a href="#">Delete</a></td>
+            </tr>
+            <tr>
+                <td>Bob</td>
+                <td>bob@tom.com</td>
+                <td>10000</td>
+                <td><a href="#">Delete</a></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <form action="#">
+        <div>添加新员工</div>
+        name: <input type="text" name="name" id="name"><br>
+        email: <input type="text" name="email" id="email"><br>
+        salary: <input type="text" name="salary" id="salary"><br>
+        <input type="submit" value="submit" id="submit">
+    </form>
+</body>
+</html>
