@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <style>
+        #areaDiv{
+            height: 100px;
+            width: 300px;
+            border: 1px solid black;
+        }
+        #showMsg{
+            margin-top: 10px;
+            height: 20px;
+            width: 300px;
+            border: 1px solid black;
+        }
+    </style>
+
+    <script>
+        window.onload=function(){
+            var areaDiv=document.getElementById('areaDiv');
+            var showMsg=document.getElementById('showMsg');
+
+            areaDiv.onmousemove=function(event){
+                event= event || window.event
+                showMsg.innerHTML='x='+event.clientX+' y='+event.clientY;
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="areaDiv"></div>
+    <div id="showMsg"></div>
+</body>
+</html>

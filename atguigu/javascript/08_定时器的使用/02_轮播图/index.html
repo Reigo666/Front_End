@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        #outer{
+            width: 259px;
+            /* height: 215px; */
+            height: 300px;
+            background-color: skyblue;
+            margin: 50px auto;
+            /* padding: 0 10px; */
+            position: relative;
+            /* overflow: hidden; */
+            
+            
+        }
+        #navlist{
+            list-style-type: none;
+            display: flex;
+            /* 不应该写死 */
+            width: 2000px;
+            height: 100%;
+            position: absolute;
+            
+        }
+        #navlist li{
+            /* float: left; */
+            margin: auto 10px;
+            width: 239px;
+            height: 215px;
+            display: flex;
+            
+        }
+        img{
+            display: block;
+            margin: auto;
+        }
+        #navdiv{
+            /* display: flex; */
+            position: absolute;
+            left: 50%;
+            top: 75%;
+            transform: translate(-50%);
+        }
+
+        a{
+            background-color: red;
+            opacity: 0.5;
+            height: 10px;
+            width: 10px;
+            display: block;
+            float: left;
+            margin: 0 3px;
+        }
+        a:hover{
+            background-color: black;
+        }
+    </style>
+
+    <script>
+        function getStyle(elem,styleName){
+            if(window.getComputedStyle){
+                return getComputedStyle(elem,null)[styleName];
+            }else{
+                return elem.currentStyle[styleName];
+            }
+        }
+
+        
+        
+        window.onload=function(){
+            function setA(){
+                if(idx>=allImgs.length-1){
+                    console.log(navlist.style.left);
+                    idx=0
+                    navlist.style.left=0;
+                }
+                for(var i=0;i<allA.length;i++){
+                    allA[i].style.backgroundColor='';
+                }
+                
+                allA[idx].style.backgroundColor='black';
+                
+            }
+
+            // 块的移动效果
+            function move(obj,target,speed,attr,callback){
+                clearInterval(obj.timer)
+                var oldValue=parseInt(getStyle(obj,attr))
+                if(oldValue>=target){
+                    speed=-speed;
+                }
+                console.log({obj,target});
+                obj.timer=setInterval(() => {
+                    var newValue=parseInt(getStyle(obj,attr))+speed;
+                    if(speed>0 && newValue>=target || speed<0&&newValue<=target){
+                        newValue=target
+                    }
+                    obj.style[attr]=newValue+'px';
+                    console.log(obj.style[attr]);
+                    if(newValue==target){
+                        clearInterval(obj.timer)
+                        callback && callback()
+                    }
+                },30)
+            }
+
+            var navlist=document.getElementById('navlist');
+            var allImgs=navlist.getElementsByTagName('img');
+            var allA=document.getElementsByTagName('a');
+            // alert(allImgs.length)
+            // 轮播效果
+
+            // 当前播放的图片idx
+            var idx=0
+            // 设置第0个按钮为黑色
+            setA();
+            var timer;
+            //设置自动播放开始
+            autoPlay()
+
+            //为每个按钮绑定点击切换图片事件
+            for(var i=0;i<allA.length;i++){
+                allA[i].index=i
+                allA[i].onclick=function(){
+                    // 关闭动画
+                    clearInterval(timer)
+
+                    var i=this.index;
+                    idx=i;
+                    setA();
+                    move(navlist,-idx*259,20,'left',autoPlay)
+                    // setA();
+                    // navlist.style.left=-i*259+'px';
+                }
+            }
+            
+            //设置自动播放开始
+            function autoPlay(){
+                timer=setInterval(() => {
+                    idx++;
+                    if(idx>=allImgs.length)idx=0
+                    console.log('move开始');
+                    move(navlist,-idx*259,10,'left',setA)
+                },3000)
+            }   
+            
+        }
+    </script>
+</head>
+<body>
+    <div id="outer">
+        <ul id="navlist">
+            <li><img src="./imgs/banner1.png" alt=""></li>
+            <li><img src="./imgs/banner2.png" alt=""></li>
+            <li><img src="./imgs/banner3.png" alt=""></li>
+            <li><img src="./imgs/banner4.png" alt=""></li>
+            <li><img src="./imgs/电饭煲.png" alt=""></li>
+            <li><img src="./imgs/banner1.png" alt=""></li>
+        </ul>
+        <div id="navdiv">
+            <a href="javascript:;"></a>
+            <a href="javascript:;"></a>
+            <a href="javascript:;"></a>
+            <a href="javascript:;"></a>
+            <a href="javascript:;"></a>
+        </div>
+    </div>
+</body>
+</html>

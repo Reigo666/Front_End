@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <style>
+        #box{
+            width: 100px;
+            height: 100px;
+            background-color: skyblue;
+        }
+    </style>
+    
+    <script>
+        //解决IE8没有addEventListener的兼容性问题
+        function bind(obj,eventStr,callback){
+            if(obj.addEventListener){
+                obj.addEventListener(eventStr,callback,false)
+            }else{
+                obj.attachEvent('on'+eventStr,function(){
+                    callback.call(obj);
+                })
+            }
+        }
+
+        function stretch(event){
+            event=event||window.event
+            //使用addEventListener方法需要event.preventDefault()方法来阻止默认滚动行为，box.onwheel才能使用return false方法
+            //IE8中没有event.preventDefault 但是IE8中event.returnValue=false能阻止默认行为
+            event.preventDefault&&event.preventDefault()
+            if(event.deltaY>0 || event.detail<0){
+                box.style.height=box.clientHeight+10+'px';
+            }else{
+                box.style.height=box.clientHeight-10+'px';
+            }
+            return false
+        }
+
+        window.onload=function(){
+            var box=document.getElementById('box');
+            // 解决IE中没有onwheel的兼容性问题，同时IE8以下没有addEventListener
+            bind(box,'wheel',stretch)
+        }
+    </script>
+</head>
+<body>
+    <div id="box"></div>
+    <div style="height: 2000px;"></div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <style>
+        #box{
+            width: 400px;
+            height: 200px;
+            border: 2px solid black;
+        }
+    </style>
+
+    <script>
+        window.onload=function(){
+            var box=document.getElementById('box');
+            box.onmouseover=function(){
+                const xhr=new XMLHttpRequest();
+                // 超时2s设置
+                xhr.timeout=2000
+                // 超时回调
+                xhr.ontimeout=function(){
+                    alert('响应超时，请稍后重试');
+                }
+
+                xhr.onerror=function(){
+                    alert('网络异常！！请检查网络连接！');
+                }
+
+                xhr.open('GET','http://127.0.0.1:8000/delay');
+                xhr.send();
+                xhr.onreadystatechange=function(){
+                    if(xhr.readyState===4){
+                        if(xhr.status>=200 && xhr.status<300){
+                            box.innerHTML=(xhr.response);
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="box"></div>
+</body>
+</html>

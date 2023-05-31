@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script>
+        window.onload=function(){
+            var btn01=document.getElementById('btn01');
+            // btn01.addEventListener('click',() => {
+            //     alert(this);
+            // })
+            
+            bind(btn01,'click',function(){
+                alert(this);
+            })
+
+            function bind(obj,eventStr,callback){
+                if(obj.addEventListener){
+                    obj.addEventListener(eventStr,callback,false)
+                }else{
+                    obj.attachEvent('on'+eventStr,function(){
+                        callback.call(obj);
+                    })
+                }
+                
+            }
+        }
+    </script>
+</head>
+<body>
+    <button id="btn01">点我触发事件</button>
+</body>
+</html>

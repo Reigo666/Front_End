@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <style>
+        #box{
+            width: 400px;
+            height: 200px;
+            border: 2px solid black;
+            margin-top: 20px;
+        }
+        
+    </style>
+    <script>
+        window.onload=function(){
+            var box=document.getElementById('box');
+            box.onmouseover=function(){
+                const xhr=new XMLHttpRequest()
+                // 设置响应体数据的类型
+                xhr.responseType='json'
+                xhr.open('GET','http://127.0.0.1:8000/server')
+                xhr.send()
+                xhr.onreadystatechange=function(){
+                    if(xhr.readyState===4){
+                        if(xhr.status>=200 && xhr.status<300){
+                            // 手动对数据进行转化
+                            // let data=JSON.parse(xhr.response)
+                            // box.innerHTML=data.name
+
+                            // 自动转换
+                            box.innerHTML=xhr.response.name
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="box"></div>
+</body>
+</html>

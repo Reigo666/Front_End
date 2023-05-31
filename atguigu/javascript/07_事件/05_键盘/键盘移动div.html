@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <style>
+        #box{
+            width: 100px;
+            height: 100px;
+            background-color: skyblue;
+            position: absolute;
+        }
+    </style>
+
+    <script>
+        window.onload=function(){
+            var box=document.getElementById('box');
+            document.onkeydown=(event)=>{
+                event=event||window.event
+                console.log(event.keyCode);
+                var keyCode=event.keyCode
+                var ol=box.offsetLeft
+                var ot=box.offsetTop
+                if(keyCode==37){//<-
+                    box.style.left=ol-10+'px'
+                }else if(keyCode==38){//up
+                    box.style.top=ot-10+'px'
+                }else if(keyCode==39){//->
+                    box.style.left=ol+10+'px'
+                }else if(keyCode==40){//down
+                    box.style.top=ot+10+'px'
+
+                }
+                return false;
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="box"></div>
+    <div style="height: 2000px;"></div>
+</body>
+</html>

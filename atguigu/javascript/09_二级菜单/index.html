@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        
+        #my_menu{
+            width: 150px;
+            margin-left: 200px; 
+        }
+
+        #my_menu div:first-child span:first-child{
+            border-radius: 10px 10px 0 0;
+        }
+
+        #my_menu::after{
+            display: block;
+            content: '';
+            height: 10px;
+            border-radius: 0 0 10px 10px;
+            background-color: rgb(236, 238, 235);
+        }
+        #my_menu>div{
+            overflow: hidden;
+        }
+        .menuSpan{
+            background-color: rgb(97, 100, 97);
+            color: white;
+            display: block;
+            
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        a{
+            display: block;
+            text-decoration: none;
+            color: black;
+            background-color: rgb(236, 238, 235);
+            padding: 3px 10px;
+            font-size: 14px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .collapsed{
+            height: 31px;
+            overflow: hidden;
+        }
+
+        /* #div1{
+            padding: 20px;
+            background-color: skyblue;
+        } */
+    </style>
+
+    <script>
+        function getStyle(elem,styleName){
+            if(window.getComputedStyle){
+                return getComputedStyle(elem,null)[styleName]
+            }else{
+                return elem.currentStyle[styleName]
+            }
+        }
+        function hasClass(elem,cn){
+            var reg=new RegExp('\\b'+cn+'\\b');
+            if(reg.test(elem.className))return true;
+            return false
+        }
+        function addClass(elem,cn){
+            var reg=new RegExp('\\b '+cn+'\\b');
+            if(!hasClass(elem,cn))elem.className+=' '+cn
+        }
+        function removeClass(elem,cn){
+            
+            var reg=new RegExp('\\b'+cn+'\\b');
+            var spacereg=/^\s*|\s*$/g
+            
+            //去除类名
+            var str1=elem.className.replace(reg,'')
+            //去除前后空格
+            elem.className=str1.replace(spacereg,'')
+
+        }
+
+        function move(elem,attr,target,speed,callback){
+            clearInterval(elem.timer)
+            var oldValue=parseInt(getStyle(elem,attr))
+            if(oldValue>=target){
+                speed=-speed;
+            }
+            elem.timer=setInterval(() => {
+                var oldValue=parseInt(getStyle(elem,attr));
+                
+                var newValue=oldValue+speed;
+                if(speed>0 && newValue>=target || speed<0 && newValue<=target){
+                    newValue=target
+                }
+                elem.style[attr]=newValue+'px';
+                if(newValue==target){
+                    clearInterval(elem.timer)
+                    callback && callback();
+                }
+            },30)
+        }
+
+        function toggleClass(elem,cn){
+            if(hasClass(elem,cn)){
+                removeClass(elem,cn);
+            }else{
+                addClass(elem,cn)
+            }
+        }
+        window.onload=function(){
+
+            var my_menu=document.getElementById('my_menu');
+            
+            var allSpan=document.querySelectorAll('.menuSpan');
+
+            var openDiv=allSpan[0].parentNode;
+
+            //为每个span按钮绑定点击事件
+            for(var i=0;i<allSpan.length;i++){
+                allSpan[i].onclick=function(){
+                    var parentDiv=this.parentNode
+                    toggleMenu(parentDiv)
+                    // 上次和这次点击一样，什么都不做
+                    // 上次和这一次点击不一样
+                    // 分情况讨论 上一次打开上一次应该被关闭
+                    // 上一次被关闭 不用操作
+                    if(openDiv!=parentDiv && !hasClass(openDiv,'collapsed')){
+                        //当前结果是 上一次点击和现在不同 且 上一次是点开的
+                        toggleMenu(openDiv)
+                    }
+
+                    // 记录先前操作的div
+                    openDiv=parentDiv;
+                }
+
+                
+            }
+
+            //给定一个elem，切换他的宽高
+            function toggleMenu(elem){
+                var oldHeight=elem.offsetHeight
+                toggleClass(elem,'collapsed')
+                var newHeight=elem.offsetHeight
+                
+                elem.style.height=oldHeight+'px';
+                move(elem,'height',newHeight,10,() => {
+                    elem.style.height=''
+                })
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="my_menu" class="sdmenu">
+        <div id="div1">
+            <span class="menuSpan">在线工具</span>
+            <a href="#">图像优化</a>
+            <a href="#">收藏夹图标生成器</a>
+            <a href="#">邮件</a>
+            <a href="#">htaccess密码</a>
+            <a href="#">梯度图像</a>
+            <a href="#">按钮生成器</a>
+        </div>
+
+        <div class="collapsed">
+            <span class="menuSpan">支持我们</span>
+            <a href="#">推荐我们</a>
+            <a href="#">链接我们</a>
+            <a href="#">网络资源</a>
+        </div>
+
+        <div class="collapsed">
+            <span class="menuSpan">合作伙伴</span>
+            <a href="#">JavaScript工具包</a>
+            <a href="#">CSS驱动</a>
+            <a href="#">CodingForums</a>
+            <a href="#">CSS例子</a>
+        </div>
+
+        <div class="collapsed">
+            <span class="menuSpan">测试电流</span>
+            <a href="#">Current or not</a>
+            <a href="#">Current or not</a>
+            <a href="#">Current or not</a>
+            <a href="#">Current or not</a>
+        </div>
+    </div>
+
+    
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <style>
+        #box{
+            width: 400px;
+            height: 200px;
+            border: 2px solid black;
+        }
+    </style>
+
+    <script>
+        window.onload=function(){
+            var box=document.getElementById('box');
+            box.onmouseover=function(){
+                const xmr=new XMLHttpRequest();
+                // 拼接时间戳 解决ie缓存问题
+                xmr.open('GET','http://127.0.0.1:8000/ie?'+Date.now());
+                xmr.send();
+                xmr.onreadystatechange=function(){
+                    if(xmr.readyState===4){
+                        if(xmr.status>=200 && xmr.status<300){
+                            box.innerHTML=(xmr.response);
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="box"></div>
+</body>
+</html>

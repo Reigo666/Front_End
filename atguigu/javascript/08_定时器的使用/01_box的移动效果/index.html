@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script>
+        function getStyle(elem,styleName){
+            if(window.getComputedStyle){
+                return getComputedStyle(elem,null)[styleName];
+            }else{
+                return elem.currentStyle[styleName];
+            }
+        }
+        window.onload=function(){
+            var box1=document.getElementById('box1');
+            var btn01=document.getElementById('btn01');
+            var btn02=document.getElementById('btn02');
+            var btn03=document.getElementById('btn03');
+            var btn04=document.getElementById('btn04');
+            var btn05=document.getElementById('btn05');
+            /* 
+                obj元素
+                target目标位置
+                speed变化速度
+                attr属性 'left' 'top' 'width' 'height'
+                callback回调函数
+            */
+            function move(obj,target,speed,attr,callback){
+                clearInterval(obj.timer)
+                var curValue=parseInt(getStyle(obj,attr))
+                if(curValue>target){
+                    speed=-speed
+                }
+                obj.timer=setInterval(() => {
+                    var newValue=parseInt(getStyle(obj,attr))+speed;
+                    console.log(newValue);
+                    
+                    if(speed>0 && newValue>=target || speed<0 && newValue<=target){
+                        newValue=target
+                    }
+
+                    obj.style[attr]=newValue+'px';
+                    if(newValue==target){
+
+                        clearInterval(obj.timer);
+                        callback && callback();
+                    }
+                },30)
+            }
+            // box1向右移动
+            btn01.onclick=() => {
+                move(box1,600,10,'left')
+            }
+            // box1向左移动
+            btn02.onclick=() => {
+                move(box1,0,10,'left')
+            }
+            // box2向右移动
+            btn03.onclick=() => {
+                move(box2,600,20,'left')
+            }
+            // box2向左移动
+            btn04.onclick=() => {
+                move(box2,0,20,'left')
+            }
+
+            // 测试按钮
+            btn05.onclick=() => {
+                move(box2,600,20,'width',() => {
+                    move(box2,600,20,'height')
+                })
+            }
+            
+        
+        }
+    </script>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        #box1{
+            width: 100px;
+            height: 100px;
+            background-color: skyblue;
+            position: absolute;
+            top: 50px;
+            
+        }
+        #box2{
+            width: 100px;
+            height: 100px;
+            background-color: orange;
+            position: absolute;
+            top: 200px;
+        }
+        #line{
+            height: 1000px;
+            border :1px solid black;
+            /* margin-left: 800px; */
+            position: absolute;
+            left: 600px;
+        }
+    </style>
+</head>
+<body>
+    <button id="btn01">点我box1向右移动</button>
+    <button id="btn02">点我box1向左移动</button>
+    <button id="btn03">点我box2向右移动</button>
+    <button id="btn04">点我box2向左移动</button>
+    <button id="btn05">测试按钮</button>
+    <div id="box1"></div>
+    <div id="box2"></div>
+    <div id="line"></div>
+</body>
+</html>

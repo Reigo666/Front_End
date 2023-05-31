@@ -1321,4 +1321,285 @@ element.clientWidth(元素的属性)
 7. 判断滚动条是否滚动到底
 clientHeight+scrollTop==scrollHeight
 clientWidth+scrollTop==scrollWidth
-1.  
+
+# 十一.事件
+## 11.1 onmousemove
+- `event.clientX`和`event.clientY `相对于视口的左和上
+- `event.pageX`和`event.pageY `相对于文档的左和上
+```js
+var areaDiv=document.getElementById('areaDiv');
+var showMsg=document.getElementById('showMsg');
+
+areaDiv.onmousemove=function(event){
+    event= event || window.event //解决了IE event在window中的兼容性问题
+    showMsg.innerHTML='x='+event.clientX+' y='+event.clientY;
+}
+```
+## 解决兼容性问题
+- `event.pageX`和`event.pageY `在IE8中没有
+- `chrome`浏览器认为`scrollTop`是html的(现在已经是html了 以前可能是body)
+- `其他`浏览器认为`scrollTop`是html的(未经过完全测试)
+
+```js
+var box=document.getElementById('box');
+document.onmousemove=function(event){
+    var st=document.documentElement.scrollTop
+    var sl=document.documentElement.scrollLeft
+
+    event= event || window.event
+
+    box.style.left=event.clientX+sl+"px"
+    box.style.top=event.clientY+st+"px"
+    // IE8中没有event.pageX属性
+    // box.style.left=event.pageX+"px"
+    // box.style.top=event.pageY+"px"
+}
+
+```
+
+## 11.2 事件的冒泡
+- 所谓的冒泡指的就是事件的向上传导，当后代元素上的事件被触发时，其祖先元素的相同时间也会被触发
+- 在开发中大部分都是有用的，如果不希望发生事件冒泡可以通过事件对象来取消冒泡
+```js
+// 阻止在stopBubbleBox中冒泡
+var stopBubbleBox=document.getElementById('stopBubbleBox');
+stopBubbleBox.onmousemove=function(event){
+    event=event||window.event;
+    event.cancelBubble=true;
+}
+```
+
+## 11.3 事件的委派
+- 将事件统一绑定给元素的共同的祖先元素，这样后代元素上的事件触发时，会一直冒泡到祖先元素，从而通过祖先元素的响应函数来处理事件
+- 事件委派利用了冒泡，通过委派可以减少事件绑定的次数，从而提高程序的性能
+```js
+// 给父元素绑定一个点击事件
+list.onclick=(event) => {
+    event=event || window.event
+    var reg=/\blink\b/i
+    if(reg.test(event.target.className)){
+        alert('点击class="link box了a标签');
+    }
+}
+```
+
+## 11.4 事件的绑定
+**addEventListener()**
+- 通过这个方法可以为元素绑定(多个)响应函数,按绑定顺序执行
+- **不支持IE8**以下
+- 参数：
+  1. 事件的字符串，不要on
+  2. 回调函数，当事件触发时该函数会被调用
+  3. (可选)是否在捕获阶段触发事件，需要一个布尔值，一般都传false 
+
+**attachEvent()**
+- **仅在IE8中**可以使用attachEvent()来绑定事件
+- 参数：
+1. 事件的字符串，要on
+2. 回调函数
+
+> 注意：
+> - addEventListener()中的this，是绑定事件的对象
+> - attachEvent()中的this，是window
+
+**解决兼容性问题**
+```js
+bind(btn01,'click',function(){
+    alert(this);
+})
+
+function bind(obj,eventStr,callback){
+    if(obj.addEventListener){
+        obj.addEventListener(eventStr,callback,false)
+    }else{ 
+        obj.attachEvent('on'+eventStr,function(){
+            callback.call(obj);//IE8中的this为window，需要使用call方法绑定this为obj
+        })
+    }
+}
+```
+## 11.5 事件的捕获
+- W3C综合了两个公司的方案，将事件传播分成了三个阶段
+1. 捕获阶段<br>
+    - 在捕获阶段时从最外层的祖先元素，向目标元素进行事件的捕获，但是默认此时不会被触发事件
+2. 目标阶段<br>
+    - 事件捕获到目标元素，捕获结束开始在目标元素上触发事件
+3. 冒泡阶段<br>
+    - 事件从目标元素向他的祖先元素传递，依次触发祖先元素上的事件。
+- 如果希望在捕获阶段就触发事件，可以将addEventListener()的第三个参数设置为true。
+- 一般情况下我们不希望捕获阶段触发事件，所以这个参数一般都是false
+- IE8及以下的浏览器没有捕获阶段
+
+## 11.6 拖拽
+```js
+var box1=document.getElementById('box1');
+box1.onmousedown=(event) => {
+    //解决兼容性问题
+    //IE8 使用setCapture捕获点击事件 取消默认行为的影响
+    box1.setCapture&&box1.setCapture()
+    event=event||window.event
+    var diffx=event.clientX-box1.offsetLeft;
+    var diffy=event.clientY-box1.offsetTop;
+    document.onmousemove=(event) => {
+        event=event||window.event
+        var cx=event.clientX;
+        var cy=event.clientY;
+        box1.style.left=cx-diffx+'px'
+        box1.style.top=cy-diffy+'px'
+    }
+    document.onmouseup=() => {
+        document.onmousemove=null;
+        document.onmouseup=null;
+        //IE8 使用releaseCapture取消捕获点击事件 如果不取消会陷入恶性循环，拖拽时会setCapture设置捕获但还没有点击。点击其他地方后，由于捕获点击，又会继续设置捕获带动拖动
+        box1.releaseCapture&&box1.releaseCapture()
+    }
+    /* 
+        当我们拖拽一个网页中的内容时，浏览器会默认去搜索引擎中搜索内容
+        此时会导致拖拽功能的异常，这个是浏览器提供的默认行为，
+        如果不希望发生这个行为，则可以通过return false来取消默认行为
+    */
+    return false;
+}
+```
+
+## 11.7 滚动
+```js
+//解决IE8没有addEventListener的兼容性问题
+function bind(obj,eventStr,callback){
+    if(obj.addEventListener){
+        obj.addEventListener(eventStr,callback,false)
+    }else{
+        obj.attachEvent('on'+eventStr,function(){
+            callback.call(obj);
+        })
+    }
+}
+
+function stretch(event){
+    event=event||window.event
+    //使用addEventListener方法需要event.preventDefault()方法来阻止默认滚动行为，box.onwheel才能使用return false方法
+    //IE8中没有event.preventDefault 但是IE8中event.returnValue=false能阻止默认行为
+    event.preventDefault&&event.preventDefault()
+    if(event.deltaY>0 || event.detail<0){
+        box.style.height=box.clientHeight+10+'px';
+    }else{
+        box.style.height=box.clientHeight-10+'px';
+    }
+    return false
+}
+
+window.onload=function(){
+    var box=document.getElementById('box');
+    // 解决IE中没有onwheel的兼容性问题，同时IE8以下没有addEventListener
+    bind(box,'wheel',stretch)
+}
+```
+
+## 11.8 键盘
+```js
+window.onload=function(){
+    var input=document.getElementsByTagName('input')[0]
+    input.onkeydown=(event) => {
+        event=event||window.event
+        console.log(event.keyCode);
+        if(event.keyCode>=48 && event.keyCode<=57)return false
+    }
+}
+```
+
+# 十二.BOM
+- 浏览器对象模型
+- BOM可以使我们通过JS来操作浏览器
+- 在BOM中为我们提供了一组对象，用来完成对浏览器的操作
+- BOM对象
+    1. Window
+    - 代表的是整个浏览器的窗口，同时window也是网页中的全局对象
+    2. Navigator
+    - 代表的当前浏览器的信息，通过该对象可以来识别不同的浏览器
+    3. Location
+    - 当前浏览器的地址栏信息，通过Location可以获取地址栏信息，或者操作浏览器跳转页面
+    4. History
+    - 浏览器的历史记录，可以通过该对象来操作浏览器的历史记录
+    - 由于隐私原因，该对象不能获取到具体的历史记录，只能操作浏览器向前或向后翻页
+    - 而且该操作旨在当此访问时有效
+    5. Screen 
+    - 代表用户的屏幕的信息，通过该对象可以获取到用户的显示器的相关的信息
+## 12.1 Navigator
+用于判断浏览器信息
+```js
+var ua=navigator.userAgent;
+if(/firefox/i.test(ua)){
+    alert('你是火狐!!!');
+}else if(/chrome/i.test(ua)){
+    alert('你是Chrome!!!');
+}else if(/msie/i.test(ua)){
+    alert('你是IE浏览器!!!');
+}else if("ActiveXObject" in window){
+    alert('你是IE11!!!');
+}
+```
+## 12.2 history
+1. history.back()
+2. history.foward()
+3. history.go()
+
+## 12.3 location
+1. location就是当前页面的网址
+2. location="www.baidu.com" 跳转到某个页面,并且生成历史记录
+3. location="01.BOM.html"
+4. location.assign("www.baidu.com") 跳转到某页面，与直接修改location一样
+5. location.reload(true) 用于重新加载当前页面，作用和刷新一样,如果在方法中传递一个true作为参数，则会清空缓存刷新。
+6. location.replace() 使一个新的页面替换当前页面，调用完毕也会跳转页面。但不会生成历史记录，不能使用回退按钮回退。
+
+## 12.4 setInterval(function,time)
+```js
+var count=document.getElementById()
+var num=1;
+var timer=setInterval(function(){
+    count.innerHTML=num++;
+},1000)
+clearInterval(timer)
+```
+> 注意：
+> 1. 通过按钮点击事件来开启定时器需要将上一个定时器关闭
+> 2. 不要使用全局的timer保存定时器，因为再开启别的定时器时会将上一个关闭。 解决方案是为obj添加timer属性。
+
+# 十三.json
+1. JSON定义
+- JSON就是一个特殊格式的字符串，这个字符串可以被任意的语言所识别，并且可以转换为任意语言中的对象，JSON在开发中主要用来数据的交互
+- JSON和JS对象的格式一样，只不过JSON字符串中的属性名必须加双引号。
+2. JSON分类
+    1. 对象{}
+    2. 数组[]
+3. JSON中允许的值：
+   1. 字符串
+   2. 数值
+   3. 布尔值
+   4. null
+   5. 对象
+   6. 数组
+```js
+var obj='{"name":"孙悟空","age":"18","gender":"男"}';
+var arr='[1,2,3,"hello",true]';
+var obj2='{"arr":[1,2,3]}';
+var arr2='[{"name":"孙悟空","age":"18","gender":"男"},1,2,3]';
+```
+4. JSON->JS对象 | JS对象->JSON
+```js
+var json='{"name":"孙悟空","age":"18","gender":"男"}';
+var obj=JSON.parse(json); //JSON->JS对象
+JSON.stringify(obj);
+``` 
+5. eval()
+- 这个函数可以用来执行一段字符串形式的JS代码，并将执行结果返回
+- 如果使用eval()执行的字符串中含有{},它会将{}当成是代码块
+- 如果不希望将其当成代码块解析，则需要在字符串前后各加一个()
+- 功能强大，但开发中尽量不要使用，执行性能比较差，还具有安全隐患。
+```js
+var str2="alert('hello');";
+var obj=eval("("+str+")");
+console.log(obj);
+```
+
+
+

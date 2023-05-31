@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <style>
+        #box{
+            width: 400px;
+            height: 200px;
+            border: 2px solid black;
+            margin-top: 20px;
+        }
+    </style>
+
+    <script>
+        window.onload=function(){
+            var box=document.getElementById('box');
+            box.onmouseover=() => {
+                const xhr=new XMLHttpRequest();
+                xhr.open('POST','http://127.0.0.1:8000/server?d=100') //设置请求参数
+                // xhr.send('a=1&b=2&c=3') //设置请求体
+
+                // 设置请求头
+                xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded')//设置请求体内容格式
+                xhr.setRequestHeader('name','atguigu')//自定义请求头
+
+                xhr.send('123321') //设置请求体可以随意设置
+                xhr.onreadystatechange=function(){
+                    if (xhr.readyState===4){
+                        if(xhr.status>=200 && xhr.status<300){
+                            box.innerHTML=xhr.response;
+                        }
+                    }
+                }
+            }
+            
+        }
+    </script>
+</head>
+<body>
+    <div id="box"></div>
+</body>
+</html>

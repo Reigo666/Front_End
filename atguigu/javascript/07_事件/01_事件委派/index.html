@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script>
+        window.onload=function(){
+            var btn01=document.getElementById('btn01');
+            var list=document.getElementById('list');
+            // 添加一个超链接
+            btn01.onclick=function(){
+                var li=document.createElement('li');
+                li.innerHTML='<li><a href="#" class="link box">'+'新超链接'+'</a></li>';
+                list.appendChild(li);
+            }
+
+            // 给父元素绑定一个点击事件
+            list.onclick=(event) => {
+                event=event || window.event
+                var reg=/\blink\b/i
+                if(reg.test(event.target.className)){
+                    alert('点击class="link box了a标签');
+                }
+            }
+        }
+    </script>
+
+    <style>
+        li{
+            background-color: skyblue;
+        }
+        ul{
+            background-color: orange;
+        }
+    </style>
+</head>
+<body>
+    <ul id="list">
+        <li><a href="javascript:;" class="link1 box">超链接1</a></li>
+        <li><a href="javascript:;" class="link2 box">超链接2</a></li>
+        <li><a href="javascript:;" class="link3 box">超链接3</a></li>
+    </ul>
+    <button id="btn01">添加一个超链接</button>
+</body>
+</html>

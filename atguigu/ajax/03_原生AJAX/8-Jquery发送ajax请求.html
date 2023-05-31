@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.2.3/css/bootstrap.css" rel="stylesheet">
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.4/jquery.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h2 class="page-header">jQuery发送AJAX请求</h2>
+        <button class="btn btn-primary">GET</button>
+        <button class="btn btn-danger">POST</button>
+        <button class="btn btn-info">通用型方法AJAX</button>
+    </div>
+
+    <script>
+        $('button').eq(0).click(() => {
+            $.get('http://127.0.0.1:8000/jquery-server',{a:100,b:200},(data) => {
+                console.log(data);
+            },'json')
+        })
+
+        $('button').eq(1).click(() => {
+            $.post('http://127.0.0.1:8000/jquery-server',{a:100,b:200},(data) => {
+                console.log(data);
+            })
+        })
+    </script>
+</body>
+</html>

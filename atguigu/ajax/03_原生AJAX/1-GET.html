@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <style>
+        #box{
+            width: 400px;
+            height: 200px;
+            border: 2px solid black;
+            margin-top: 20px;
+        }
+    </style>
+
+    <script>
+        window.onload=function(){
+            var btn01=document.getElementById('btn01');
+            var box=document.getElementById('box');
+            btn01.onclick=() => {
+                // 1.创建对象
+                const xhr=new XMLHttpRequest();
+                // 2.初始化，设置请求方法和url
+                xhr.open('GET','http://127.0.0.1:8000/server?a=1') //设置请求参数
+                // 3.发送
+                xhr.send()
+                // 4.事件绑定 处理服务端返回的结果
+                // on when 当....时候
+                // readystate 是 xhr 对象中的属性，表示状态0 1 2 3 4
+                // change改变
+                xhr.onreadystatechange=function(){
+                    if(xhr.readyState===4){
+                        // 判断响应状态码 200 404 403 401 500
+                        // 2xx成功
+                        if(xhr.status>=200 && xhr.status<=300){
+                            // 处理结果 行 头 空行 体
+                            // 响应行
+                            console.log(xhr.status);
+                            console.log(xhr.statusText);
+                            console.log(xhr.getAllResponseHeaders());
+                            console.log(xhr.response);
+                            box.innerHTML=xhr.response;
+                        }
+                    }
+                }
+            }
+            
+        }
+    </script>
+</head>
+<body>
+    <button id="btn01">点击发送请求</button>
+    <div id="box"></div>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <style>
+        #box{
+            width: 100px;
+            height: 100px;
+            background-color: skyblue;
+            position: absolute;
+        }
+    </style>
+
+    <script>
+        window.onload=function(){
+            var dir=0;
+            var box=document.getElementById('box');
+            var speed=10;
+            setInterval(() => {
+                switch (dir) {
+                    case 37:
+                        box.style.left=box.offsetLeft-speed+'px'
+                        break;
+                    case 38:
+                        box.style.top=box.offsetTop-speed+'px'
+                        break;
+                    case 39:
+                        box.style.left=box.offsetLeft+speed+'px'
+                        break;
+                    case 40:
+                        box.style.top=box.offsetTop+speed+'px'
+                        break;
+                    default:
+                        break;
+                }
+            },30)
+            document.onkeydown=(event) => {
+
+                if(event.keyCode>=37 && event.keyCode<=40){
+                    dir=event.keyCode;
+                    speed=10;
+                }
+                if(event.ctrlKey){
+                    speed=20;
+                }
+                console.log(dir);
+            }
+            document.onkeyup=(event) => {
+                console.log(event.keyCode+'按键放开了');
+                if(event.keyCode>=37 && event.keyCode<=40)dir=0
+                if(event.keyCode==17){
+                    speed=10;
+                    console.log('ctrl松开');
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="box"></div>
+</body>
+</html>

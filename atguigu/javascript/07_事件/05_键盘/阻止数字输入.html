@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script>
+        window.onload=function(){
+            var input=document.getElementsByTagName('input')[0]
+            input.onkeydown=(event) => {
+                event=event||window.event
+                console.log(event.keyCode);
+                if(event.keyCode>=48 && event.keyCode<=57)return false
+            }
+        }
+    </script>
+</head>
+<body>
+    <input type="text">
+</body>
+</html>
