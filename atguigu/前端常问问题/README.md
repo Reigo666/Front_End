@@ -175,7 +175,22 @@ UDP应用：
     Referer：当前文档的URL，表示从哪个站点链接过来的
     
 ```
-13. 
+13. 头部的content-type干嘛的
+```
+    GET 请求不存在请求体部分，请求头不需要设置 Content-Type 字段
+
+    POST 请求：
+        text/plain	                        文本文件默认值
+        text/html	                        HTML格式，内容会解析为html网页格式
+        application/json	                JSON数据格式
+        application/x-www-form-urlencoded	数据发送过程中会对数据进行序列化处理，以键值对形式? key1=value1&key2=value2的方式发送到服务器（表单默认的提交数据的格式）
+        application/octet-stream        二进制流数据（如常见的文件下载）
+        multipart/form-data 	        需要在表单中进行文件上传时，就需要使用该格式
+        image/gif	                    GIF 图片 (无损耗压缩方面被 PNG 所替代)
+        image/jpeg	                    JPEG 图片
+        image/png	                    PNG 图片
+
+```
 14. 1
 15. 1
 16. 1
@@ -185,7 +200,7 @@ UDP应用：
 20. 1
 21. 1
 
-头部的content-type干嘛的
+
 进程和线程的区别
 进程之间的通信方式
 http有什么问题，所以才会去用https去解决？
