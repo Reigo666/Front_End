@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+</head>
+<body>
+    <input type="text">
+    <p id="result"></p>
+    
+    <script>
+        const ipt=document.querySelector('input')
+        var result=document.getElementById('result');
+
+        function handle(data){
+                ipt.style.border='2px solid red';
+                result.innerHTML=data.msg;
+        }
+
+        ipt.onblur=function(){
+            let username=this.value;
+            console.log(username);
+
+            var script=document.createElement('script');
+            script.src='http://127.0.0.1:8000/check-username'
+
+            document.body.appendChild(script);
+        }      
+        
+    </script>
+</body>
+</html>

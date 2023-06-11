@@ -26,6 +26,28 @@
                 console.log(data);
             })
         })
+
+        $('button').eq(2).click(() => {
+            $.ajax({
+                url:'http://127.0.0.1:8000/server',
+                data:{
+                    a:100,
+                    b:200
+                },
+                type:'GET',
+                headers:{
+                    name:'atguigu'
+                },
+                // dataType:'json',
+                timeout:2000,
+                success:(data) => {
+                    console.log(data);
+                },
+                error:() => {
+                    alert('网页出错了')
+                }
+            })
+        })
     </script>
 </body>
 </html>

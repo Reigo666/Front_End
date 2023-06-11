@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="./promise.js"></script>
+</head>
+<body>
+    <script>
+        // let p=new Promise((resolve,reject) => {
+        //     setTimeout(() => {
+        //         // reject('error');
+        //         resolve('ok');
+        //         // throw 'err';
+        //     },1000)
+        // })
+
+        // let res=p.then((value) => {
+        //     console.log('p.then:'+value);
+        // },(reason) => {
+        //     console.warn('p.then:'+reason);
+        // })
+
+        // p.then((value) => {
+        //     console.log('p.then1:'+value);
+        // },(reason) => {
+        //     console.warn('p.then1:'+reason);
+        //     return 'then1error'
+        // })
+
+        // p.then((value) => {
+        //     console.log('p.then2:'+value);
+        // })
+        
+        // 演示异常穿透
+        // p.then((value) => {
+        //     console.log(111);
+        // }).then().then((value) => {
+        //     console.log(222);
+        // }).catch((reason) => {
+        //     console.warn(reason);
+        // })
+        
+        // Promise.all / race演示
+        let p=new Promise((resolve,reject) => {
+            setTimeout(() => {
+                resolve('ok1');
+            },200)
+            
+        })
+        let p1=Promise.resolve(new Promise((resolve,reject) => {
+            resolve('error1s')
+        }));
+        // let p2=Promise.resolve(new Promise((resolve,reject) => {
+        //     resolve('22222')
+        // }));
+        let p2=Promise.resolve('abc');
+        let res=Promise.race([p,p1,p2])
+        console.log(res);
+
+        // 异步then调用
+        // let p=new Promise((resolve,reject) => {
+            
+        //     setTimeout(() => {
+        //         resolve('ok')
+        //         console.log(111);
+        //     },500)
+            
+        // })
+        // p.then((value) => {
+        //     console.log(222);
+        // })
+        // console.log(333);
+    </script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+</head>
+<body>
+    <script>
+        let p=new Promise((resolve,reject) => {
+            setTimeout(() => {
+                console.log('ok');
+                reject('1');
+            },2000)
+        })
+        console.log(p);
+
+        let p1=p.then((value) => {
+            return 2
+        },(reason) => {
+            console.log('error1');
+            reject();
+        })
+        console.log(p1);
+
+        let p2=p1.then((value) => {
+            return 3;
+        },(reason) => {
+            console.log('error2');
+        })
+        console.log(p2);
+    </script>
+</body>
+</html>

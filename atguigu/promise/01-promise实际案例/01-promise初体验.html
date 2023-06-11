@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script>
+        function rand(a,b){
+            return Math.floor(Math.random()*(b-a+1))+a;
+        }
+
+    </script>
+</head>
+<body>
+    <button id="btn">点击抽奖</button>
+    <script>
+        var btn=document.getElementById('btn');
+        btn.onclick=function(){
+            const p=new Promise((resolve,reject) => {
+                setTimeout(() => {
+                    var rnd=rand(1,100);
+                    console.log(rnd);
+                    if(rnd>=1 && rnd<=30){
+                        resolve(rnd);
+                    }else{
+                        reject(rnd);
+                }
+            },1000)
+            })
+
+            p.then((value) => {
+                alert('恭喜你中奖了,中奖号码为'+value);
+            },(reason) => {
+                alert('再接再厉，号码为'+reason);
+            })
+        }
+
+    </script>
+</body>
+
+</html>

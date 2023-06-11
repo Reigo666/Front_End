@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+</head>
+<body>
+    <button id="btn">点我获取段子信息</button>
+    <script>
+        function sendAJAX(url){
+            return new Promise((resolve,reject) => {
+                const xhr=new XMLHttpRequest()
+                xhr.open('GET',url)
+                xhr.send()
+                xhr.onreadystatechange=function(){
+                    if(xhr.readyState===4){
+                        if(xhr.status>=200 && xhr.readyState<300){
+                            resolve(xhr.response)
+                        }else{
+                            reject(xhr.status)
+                        }
+                    }
+                }
+            })
+        }
+
+        const btn=document.getElementById('btn');
+        btn.onclick=async function () {
+            try {
+                let response=await sendAJAX('https://api.apiopen.top/api/sentences')
+                console.log(response);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+    </script>
+</body>
+</html>

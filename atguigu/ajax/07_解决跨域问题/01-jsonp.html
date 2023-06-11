@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script>
+        function handle(data){
+            var result=document.getElementById('result');
+            result.innerHTML=data.name
+        }
+    </script>
+</head>
+<body>
+    <div id="result"></div>
+    <!-- 向js发送请求 -->
+    <!-- <script src="http://127.0.0.1:5500/ajax/07_%E8%A7%A3%E5%86%B3%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/app.js"></script> -->
+    <!-- 向server发送请求 -->
+    <script src="http://127.0.0.1:8000/jsonp-server"></script>
+</body>
+</html>

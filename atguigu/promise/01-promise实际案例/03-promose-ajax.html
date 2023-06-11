@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+</head>
+<body>
+    <script>
+        const p=new Promise((resolve,reject) => {
+            const xhr=new XMLHttpRequest();
+            xhr.open('GET','https://api.apiopen.top/api/sentences')
+            xhr.send()
+            xhr.onreadystatechange=function(){
+                if(xhr.readyState===4){
+                    if(xhr.status>=200 && xhr.status<300){
+                        resolve(xhr.response);
+                    }else{
+                        console.log(xhr.status);
+                        reject(xhr.status);
+                    }
+                }
+            }
+        })
+
+        p.then((value) => {
+            console.log("Right:"+value);
+        },(reason) => {
+            console.log("Error:"+reason);
+        })
+    </script>
+</body>
+</html>

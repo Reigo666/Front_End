@@ -4,6 +4,7 @@ const express = require('express');
 // 2.创建应用对象
 const app=express();
 
+
 // 3.创建路由规则
 app.get('/server',(request,response) => {
     response.setHeader('Access-Control-Allow-Origin','*');
@@ -12,6 +13,7 @@ app.get('/server',(request,response) => {
     
     response.send(JSON.stringify(data));
 });
+
 // 接收所有请求信息
 app.all('/server',(request,response) => {
     response.setHeader('Access-Control-Allow-Origin','*');
@@ -40,6 +42,43 @@ app.all('/jquery-server',(request,response) => {
     const data={name:'zhangsan'};
     response.send(JSON.stringify(data))
     
+});
+
+// jsonp
+app.all('/jsonp-server',(request,response) => {
+    // response.send("hello jsonp server");
+    // response.send('console.log("hello jsonp server")');
+    const data={
+        name:'hello jsonp!!!'
+    }
+    const str=JSON.stringify(data);
+    response.end(`handle(${str})`);
+});
+
+// jsonp check-username
+app.all('/check-username',(request,response) => {
+    // response.send("hello jsonp server");
+    // response.send('console.log("hello jsonp server")');
+    const data={
+        exist:1,
+        msg:'该用户已经存在！'
+    }
+    const str=JSON.stringify(data);
+    response.end(`handle(${str})`);
+});
+
+// jquery jsonp
+app.all('/jquery-jsonp',(request,response) => {
+    // response.send("hello jsonp server");
+    // response.send('console.log("hello jsonp server")');
+    const data={
+        name:'zhangsan',
+        age:'18'
+    }
+    let cb=request.query.callback
+    console.log(cb);
+    const str=JSON.stringify(data);
+    response.end(`${cb}(${str})`);
 });
 
 // 4.监听端口启动服务
