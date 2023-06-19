@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        function throttle(fn,wait){
+            let timer=null;
+            return function(){
+                if(timer){
+                    return
+                }
+                timer=setTimeout(() => {
+                    fn.apply(this,arguments)
+                    timer=null
+                },wait)
+            }
+        }
+        window.onload=function(){
+            const btn=document.getElementById('btn');
+            btn.onclick=throttle(function(){
+                console.log('发送了ajax请求');
+                console.log('当前按钮是',this);
+            },1000) 
+        }
+    </script>
+</head>
+<body>
+    <button id="btn">点击触发事件</button>
+</body>
+</html>

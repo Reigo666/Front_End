@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        function getParam(url,param){
+            const reg=/\?/
+            let obj={}
+            let idx=url.search('/\?/')
+            let querys=url.slice(idx+1);
+            let params=querys.split('&');
+            console.log(params);
+            for(p of params){
+                let [k,v]=p.split('=')
+                obj[k]=v
+            }
+            return obj[param]
+        }
+        const url='www.baidu.com/s?a=1&b=2'
+        let res=getParam(url,'c');
+        console.log(res);
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

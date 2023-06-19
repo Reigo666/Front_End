@@ -31,7 +31,7 @@
                     if(xhr.readyState===4){
                         // 判断响应状态码 200 404 403 401 500
                         // 2xx成功
-                        if(xhr.status>=200 && xhr.status<=300){
+                        if(xhr.status>=200 && xhr.status<300){
                             // 处理结果 行 头 空行 体
                             // 响应行
                             console.log(xhr.status);
