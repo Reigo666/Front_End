@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .bike{
+            width: 130px;
+            height: 130px;
+            background-image: url(./imgs/bike.png);
+            margin: 0 auto;
+            margin-top: 50px;
+            border: 1px solid black;
+            animation: ride 2s infinite steps(31);
+            
+        }
+        @keyframes ride {
+            from{
+
+            }
+            to{
+                background-position: 0 -4030px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bike"></div>
+</body>
+</html>
