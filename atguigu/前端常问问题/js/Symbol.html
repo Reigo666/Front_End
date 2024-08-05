@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script>
+			window.onload=function(){
+				
+			}
+			let obj={
+					a:1,
+					b:[2,3,4],
+					[Symbol('aaa')]:'aaa'
+				}
+			
+			let obj1={
+				c:1,
+				d:[2,3,4],
+				[Symbol('bbb')]:'aaa'
+			}
+			Object.prototype[Symbol.iterator]=function abc(){ //给Object的原型方法添加迭代器
+				let index=0
+				let keys=Reflect.ownKeys(this) //取出包含symbol值的所有属性名
+				const self=this
+				return {
+					next(){
+						if(index>=keys.length){
+							return {
+								done:true,
+								value:undefined
+							}
+						}else{
+							let key=keys[index++]
+							return {
+								done:false, //告诉数据迭代是否结束
+								value:{ //自定义数据的迭代返回值
+									key,
+									value:self[key] 
+								}
+							}
+						}
+						
+					}
+				}
+			}
+			for(let {key:k,value:v} of obj1){
+				console.log(k,v);
+			}
+
+
+			</script>
+		<style>
+
+		</style> 
+</head>
+<body>
+	
+</body>
+</html>

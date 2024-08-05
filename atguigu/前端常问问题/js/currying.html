@@ -15,9 +15,11 @@
         }
 
         function currying(fn){
-            let args=[];
+            let args=[]; //创建一个空数组 记录所有柯里化的元素
             return function result(...rest){
+                //递归调用 直到参数为0 执行fn函数 并返回结果
                 if(rest.length!=0){
+                    // 参数不为0的情况添加元素到数组
                     args.push(...rest)
                     return result;
                 }else{

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    window.onload=function(){
+      /* 
+        localStorage
+      */
+      function setLocalStorage(key,value){
+        if(!key)return;
+        if(typeof value==='object'){
+          value=JSON.stringify(value)
+        }
+        window.localStorage.setItem(key,value);
+      }
+
+      function getLocalStorage(key){
+        return window.localStorage.getItem(key);
+      }
+
+      function removeLocalStorage(key){
+        window.localStorage.removeItem(key)
+      }
+      setLocalStorage('hahah',{a:1,b:2})
+      s1=getLocalStorage('hahah')
+      console.log(s1);
+      // removeLocalStorage('hahah')
+      /* 
+        sessionStorage与上面相同 
+      */
+
+      /* 
+        cookie      
+      */
+      function setCookie(key,value,expires){
+        if(!key)return;
+        const d=new Date();
+        d.setDate(d.getDate()+expires)
+        document.cookie=`${key}=${value};expires=${d.toUTCString()}`
+      }
+      setCookie('cookie','中文字符串%3A%2F%2F',2)
+
+      function getCookie(key){
+        const cookieStr=window.decodeURIComponent(document.cookie)
+        console.log({cookieStr});
+        let cookieArr=cookieStr.split('; ') //注意分号后有空格
+        for(let i=0;i<cookieArr.length;i++){
+          let cs=cookieArr[i]
+          let idx=cs.indexOf('=');
+          let k=cs.slice(0,idx);
+          let v=cs.slice(idx+1)
+          if(k==key){
+            return v
+          }
+        }
+        return undefined
+      }
+
+      let gc=getCookie('cookie')
+      console.log(gc);
+      
+      function removeCookie(key){
+        document.cookie=`${key}=;expires=${new Date()}`
+      }
+      
+      removeCookie('cookie')
+
+
+    }
+  </script>
+</head>
+<body>
+  
+</body>
+</html>

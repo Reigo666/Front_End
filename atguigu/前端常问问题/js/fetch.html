@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+</body>
+<script>
+  
+  async function sendAjax(url){
+    try{
+      let response=await fetch(url)
+      if(!response.ok) throw new Error('network is not OK!') //fetch需要先判断是否ok
+      let data=await response.json()
+      return data
+    }catch(error){
+      console.log(error);
+      return new Promise(()=>{}) //防止reject或抛出错误 外部还需要对错误处理
+    }
+  }
+
+  let ret=sendAjax('https://jsonplaceholder.typicode.com/todos')
+  console.log(ret);
+  ret.then((data) => {
+      console.log(data[0]);
+  })
+</script>
+</html>

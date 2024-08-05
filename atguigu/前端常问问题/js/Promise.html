@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    Promise.resolve1=function(value){
+      return new Promise((resolve,reject)=>{
+        if(value instanceof Promise){
+          value.then(v=>{
+            resolve(v)
+          },r=>{
+            reject(r)
+          })
+        }else{
+          resolve(value)
+        }
+      })
+    }
+
+    Promise.reject1=function(value){
+      return new Promise((resolve,reject)=>{
+        reject(value)
+      })
+    }
+    
+    Promise.all1=function(promises){
+      return new Promise((resolve,reject)=>{
+        let leftp=promises.length
+        let results=[]
+        for(let i in promises){
+          promises[i].then(v=>{
+            leftp-=1
+            results[i]=v
+            if(leftp<=0){
+              resolve(results)
+            }
+
+          },r=>{
+            reject(r)
+          })
+        }
+      })
+    }
+
+    Promise.race1=function(promises){
+      return new Promise((resolve,reject)=>{
+        for(p of promises){
+          p.then(v=>{
+            resolve(v)
+          },r=>{
+            reject(r)
+          })
+        }
+      })
+    }
+
+    let p1=Promise.resolve('Success')
+    let p2=Promise.resolve('Ok')
+    let p3=new Promise((resolve, reject) => {
+      resolve('fail')
+    })
+
+    let res=Promise.all1([p1,p2,p3])
+    console.log(res);
+
+    
+  </script>
+</head>
+<body>
+
+</body>
+</html>

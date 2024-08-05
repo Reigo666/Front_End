@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+      const xhr=new XMLHttpRequest()
+      xhr.open('GET','www.baidu.com')
+      xhr.send()
+      xhr.onreadystatechange=function(){
+        if(xhr.readyState==4){
+          if(xhr.status>=200 && xhr.readyState<300){
+            console.log(xhr.response);
+          }else{
+            console.log(xhr.status);
+          }
+        }
+      }
+
+      window.onload=function(){
+        
+      }
+      
+      </script>
+    <style>
+      
+    </style> 
+</head>
+<body>
+  <input type="text" id="ipt">
+</body>
+</html>

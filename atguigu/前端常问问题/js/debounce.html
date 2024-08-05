@@ -6,7 +6,9 @@
     <script>
         function debounce(fn,delay){
             let timer=null;
-            return function(){
+            return function(){ //这个返回的函数 就是点击事件绑定的回调函数 相当于是点击事件的一个方法
+                //所以其中的this就是dom元素
+                //其中的arguments就是点击回调传回来的事件，这个参数必须传进给fn中才能调用，否则fn中的e接收不到值
                 if(timer){
                     clearTimeout(timer);
                     timer=null
@@ -21,8 +23,8 @@
         // 3.把函数用防抖函数套起来
         window.onload=function(){
             const ipt=document.getElementById('ipt');
-            ipt.oninput=debounce(function(){
-                console.log(this.value);
+            ipt.oninput=debounce(function(e){
+                console.log(e.target.value);
             },500)
         }
     </script>

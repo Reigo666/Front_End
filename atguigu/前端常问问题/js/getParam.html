@@ -5,20 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script>
         function getParam(url,param){
-            const reg=/\?/
-            let obj={}
-            let idx=url.search('/\?/')
-            let querys=url.slice(idx+1);
-            let params=querys.split('&');
-            console.log(params);
-            for(p of params){
-                let [k,v]=p.split('=')
-                obj[k]=v
+            // const reg=/\?/
+            let res;
+            let idx=url.indexOf('?')
+            let querys=url.slice(idx+1)
+            querys=querys.split('&')
+            for(let query of querys){
+              query=query.split('=')
+              if(query[0]===param){
+                return decodeURIComponent(query[1])
+              }
             }
-            return obj[param]
+            return undefined
         }
-        const url='www.baidu.com/s?a=1&b=2'
-        let res=getParam(url,'c');
+        const url='https://www.baidu.com/s?ie=utf-8&f=8&rsv_bp=1&rsv_idx=1&tn=baidu&wd=Invalid%20regular%20expression%3A%20%2F%3F%2F%3A%20Nothing%20to%20repeat&fenlei=256&oq=javascript&rsv_pq=af7b42ea000085e7&rsv_t=8943UxiMWqv5a4%2FRACOUV1heIawog9uSaqWGQ9u3yoT0oteCgQagFoYbCvY&rqlang=cn&rsv_enter=0&rsv_dl=tb&rsv_btype=t&inputT=656&rsv_sug3=51&rsv_sug1=46&rsv_sug7=100&rsv_n=2&prefixsug=Invalid%2520regular%2520expression%253A%2520%252F%253F%252F%253A%2520Nothing%2520to%2520repeat&rsp=9&rsv_sug4=207074'
+        let res=getParam(url,'wd');
         console.log(res);
     </script>
 </head>

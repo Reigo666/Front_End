@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+      function flatten(arr){
+        return arr.reduce((pre,cur)=>{
+          if(Array.isArray(cur)){
+            pre=pre.concat(flatten(cur))
+          }else{
+            pre.push(cur)
+          }
+          return pre
+        },[])
+      }
+      let a=[1,2,3,4,[5,6],[7,[9,10]]]
+      // console.log(a.flat());
+      console.log(a.flat(Infinity));
+      console.log(flatten(a));
+    </script>    
+</head>
+<body>
+    
+</body>
+</html>
