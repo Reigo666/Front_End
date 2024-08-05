@@ -1,5 +1,9 @@
-1. Vue2数据代理
+1. Vue 数据代理 ｜ 数据劫持
 ```
+    数据代理是一种技术，数据劫持是一种场景或目的。
+    数据劫持使用了数据代理技术。在数据更新时执行响应式更新。
+    vue2使用 Object.defineProperty Get Set来实现数据代理。
+    vue3使用 Proxy 来实现数据劫持。
     1.将data中的数据代理到vm对象上，易于读取
     2.原理使用Object.defineProperty()把data对象中所有属性添加到vm上
 ```
@@ -23,7 +27,7 @@
 2. vue中的diff算法
 ```
     比较新旧的vnode是否相同来判断是否更新。
-    1.先判断是否是SameVnode(old,new), 判断其中的key，tag，iscomment，是否含有数据，这些点是否相同；samevnode是一个
+    1.先判断是否是SameVnode(old,new), 判断其中的key，tag，iscomment(v-if:false)，是否含有数据，这些点是否相同；samevnode是一个
     初步的快速比较，比较两个节点是否相同，如果不相同直接用新节点代替旧节点。
     2.在节点初步比较相同的情况下，diff算法的核心在patchVnode上。patchVnode是一个深层次的比较，比较其中的数据内容
     是否一致，会比较新旧文本，新旧子节点的情况。
@@ -49,16 +53,22 @@
   mounted():发送网络请求，绑定定时器，绑定自定义事件，订阅消息。
   beforeDestroy():清除定时器，解绑自定义事件，取消订阅消息。
 ```
-4. vue和react区别
-```
-    1.监听数据变化的实现原理不同
-        Vue通过getter/setter方法以及一些函数的劫持能精确知道数据的变化
-        React默认是通过比较引用方式diff算法进行的，若不优化，会导致大量不必要的VDom的重新渲染。
+4. Vue 和 React 区别
+``` 
+    1.架构不同：
+        Vue：单文件组件，模版写法
+        React：组件化，函数式编程
     2.数据流不同
-        Vue实现双向绑定：props可以双响绑定，组件与Dom之间可以通过v-moudel绑定。
-        React不支持双向绑定：提倡单向数据流，称之为onChange/setState模式。
-    3.组件通信的区别
-    Vue中有三种方式可以实现组件通信：
+        Vue：可以双向绑定，通过v-modal。
+        React：提倡单向数据流,手动处理双向绑定。称之为onChange/setState模式。
+    3.响应式方式不同 监听数据变化的实现原理不同
+        Vue：Object.defineProperty（Vue 2）或 Proxy（Vue 3）实现数据劫持和依赖追踪
+        React：使用useState和setState对数据进行更新渲染。
+    4.状态管理：
+        Vue：使用 Vuex。
+        React：使用 Redux、MobX 或 Context API。
+    5.组件通信的区别
+    Vue中有四种方式可以实现组件通信：
     a. 父传子props，子通过回调函数传参给父；
     b. 通过事件发送自定义消息(全局事件总线)；
     c. 通过Vue2.2中新增的provide/inject来实现父组件向子组件注入数据，可以跨越多个层级。
@@ -68,10 +78,6 @@
     a. 父传子props，子通过回调函数传参给父；
     b. 可以通过context进行跨层级的通信；
     c. 消息订阅发布pubsub
-
-    6.框架本质不同
-    Vue本职是MVVM框架，有MVC发展而来。
-    React是前端组件框架，有都断组件演化而来。
 ```
 5. vm和vc
 ```
@@ -112,13 +118,14 @@
 ```
 7. vue父子组件挂载顺序
 ```
-    父组件初始化->父组件渲染->子组件初始化->子组件渲染->子组件挂载->父组件挂载 (可以用递归先序遍历来理解这个事情)
+    父组件初始化->父组件开始渲染->子组件初始化->子组件开始渲染->子组件挂载->父组件挂载 (可以用递归先序遍历来理解这个事情)
+    开始渲染：指组件的 VDOM 被创建并准备好进行实际的 DOM 操作的过程。(BeforeMount)
 
     怎么在父组件挂载后，子组件再执行一些在子组件上的操作:
     核心思路：使用全局事件总线，在子组件上创建自定义事件，在父组件上触发。
     全局:
         Vue.prototype.$bus=new Vue() //安装全局事件总线方法1
-        beforeCreate(){
+        beforeCreate(){/ /安装全局事件总线方法2
             Vue.prototype.$bus=this
         }
     父组件挂载后:
@@ -139,7 +146,7 @@
     一种组件间通信方式，适用于任意组件间通信
     1.安装全局事件总线
         Vue.prototype.$bus=new Vue() //安装全局事件总线方法1
-        beforeCreate(){
+        beforeCreate(){ //安装全局事件总线方法2
             Vue.prototype.$bus=this
         }
     2.使用事件总线 (谁想收到数据，回调函数就在哪，自定义事件就在哪定义。)
@@ -149,7 +156,7 @@
         }
         B组件发数据
         mounted(){
-            this.$bus.%emit('demo',name)
+            this.$bus.$emit('demo',name)
         }
     3.解绑总线自定义事件
         A组件中
