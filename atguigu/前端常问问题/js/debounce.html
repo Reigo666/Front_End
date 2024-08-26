@@ -1,35 +1,38 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script>
-        function debounce(fn,delay){
-            let timer=null;
-            return function(){ //这个返回的函数 就是点击事件绑定的回调函数 相当于是点击事件的一个方法
-                //所以其中的this就是dom元素
-                //其中的arguments就是点击回调传回来的事件，这个参数必须传进给fn中才能调用，否则fn中的e接收不到值
-                if(timer){
-                    clearTimeout(timer);
-                    timer=null
-                }
-                timer=setTimeout(() => {
-                    fn.apply(this,arguments)
-                },delay)
-            }
-        }
-        // 1.先写不防抖时候的写法，
-        // 2.再写防抖函数
-        // 3.把函数用防抖函数套起来
-        window.onload=function(){
-            const ipt=document.getElementById('ipt');
-            ipt.oninput=debounce(function(e){
-                console.log(e.target.value);
-            },500)
-        }
+      /* 防抖分为防抖与立即防抖，两者区别在于是否立即执行 */
+      function debounce(fn, delay, immediate = false) {
+        let timer = null;
+        return function () {
+          //这个返回的函数 就是点击事件绑定的回调函数 相当于是点击事件的一个方法
+          immediate && !timer && fn.apply(this, arguments);
+          //所以其中的this就是dom元素
+          //其中的arguments就是点击回调传回来的事件，这个参数必须传进给fn中才能调用，否则fn中的e接收不到值
+          if (timer) {
+            clearTimeout(timer);
+          }
+          timer = setTimeout(() => {
+            !immediate && fn.apply(this, arguments);
+            timer = null;
+          }, delay);
+        };
+      }
+      // 1.先写不防抖时候的写法，
+      // 2.再写防抖函数
+      // 3.把函数用防抖函数套起来
+      window.onload = function () {
+        const ipt = document.getElementById('ipt');
+        ipt.oninput = debounce(function (e) {
+          console.log(e.target.value);
+        }, 500);
+      };
     </script>
-</head>
-<body>
-    <input type="text" id="ipt">
-</body>
+  </head>
+  <body>
+    <input type="text" id="ipt" />
+  </body>
 </html>

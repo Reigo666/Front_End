@@ -1,54 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  
-</body>
-<script>
-  class Scheduler {
-    constructor(max) {
-      this.max = max;
-      this.count = 0; // 用来记录当前正在执行的异步函数
-      this.queue = []; // 表示等待队列
-    }
-    async add(task){ 
-      
-      if(this.count>=this.max){ //如果当前任务满了 就等待(先把resolve推进队列 下一个任务完成时出队一个执行resolve)
-        await new Promise(resolve=>this.queue.push(resolve))  
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      /* Scheduler是一个支持n个任务的并发调度器 */
+      class Scheduler {
+        constructor(max) {
+          this.max = max;
+          this.cnt = 0;
+          this.queue = [];
+        }
+        //添加一个准备执行的任务，task是一个异步函数
+        async addtask(task, id) {
+          if (this.cnt >= this.max) {
+            await new Promise((resolve) => {
+              this.queue.push(resolve);
+            });
+          }
+
+          this.cnt += 1;
+          await task();
+          this.cnt -= 1;
+          if (this.queue.length) {
+            const resolve = this.queue.shift();
+            resolve();
+          }
+        }
       }
 
-      this.count+=1
-      await task()
-      this.count-=1
-      if(this.queue.length){
-        this.queue.shift()() //执行下一个任务的resolve来继续执行任务
+      const scheduler = new Scheduler(2);
+      // 外部封装一个addTask用于添加函数
+      function addTask(time, id) {
+        // 封装一个task，将任务执行时长封装成一个异步函数，返回一个promise
+        function task() {
+          return new Promise((resolve) =>
+            setTimeout(() => {
+              resolve();
+              console.log(`id${id}执行完毕`);
+            }, time)
+          );
+        }
+        scheduler.addtask(task, id);
       }
-    }
-
-    
-    // ...
-  }
-  //timeout是一个函数 time时间后return 1个成功的promise
-  const timeout = (time) => new Promise(resolve => {
-    setTimeout(resolve, time)
-  })
-
-  const scheduler = new Scheduler(2)
-
-  //addTask是一个函数 给scheduler添加一个任务(函数) 之后打印order 
-  const addTask = (time, order) => {
-    scheduler.add(() => timeout(time)).then(() => console.log(order))
-  }
-
-  addTask(1500, '1')  // 任务1
-  addTask(500, '2') // 任务2
-  addTask(300, '3') // 任务3
-  addTask(400, '4')  // 任务4
-
-  // 打印顺序是：2 3 1 4
-</script>
+      addTask(1000, '1'); // 任务1
+      addTask(500, '2'); // 任务2
+      addTask(300, '3'); // 任务3
+      addTask(400, '4'); // 任务4
+      // 打印顺序是：2 3 1 4
+    </script>
+  </head>
+  <body></body>
 </html>

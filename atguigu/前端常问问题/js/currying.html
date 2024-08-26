@@ -1,38 +1,37 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script>
-        const add=(...args) => {
-            return args.reduce((pre,cur) => {
-                return pre+cur;
-            },0)
-        }
+      const add = (arr) => {
+        return arr.reduce((pre, cur) => {
+          return pre + cur;
+        }, 0);
+      };
 
-        const mySort=(...args) => {
-            return args.sort((a,b)=>a-b);
-        }
+      const mySort = (arr) => {
+        return arr.sort((a, b) => a - b);
+      };
 
-        function currying(fn){
-            let args=[]; //创建一个空数组 记录所有柯里化的元素
-            return function result(...rest){
-                //递归调用 直到参数为0 执行fn函数 并返回结果
-                if(rest.length!=0){
-                    // 参数不为0的情况添加元素到数组
-                    args.push(...rest)
-                    return result;
-                }else{
-                    return fn(...args)
-                }
-            }
-        }
+      // 柯里化就是先把所有的元素暂存到一个数组里，直到没有元素后就执行fn函数
+      function currying(fn) {
+        let arr = []; //创建一个空数组 记录所有柯里化的元素
+        return function result(...rest) {
+          //递归调用 直到参数为0 执行fn函数 并返回结果
+          if (rest.length != 0) {
+            // 参数不为0的情况添加元素到数组
+            arr.push(...rest);
+            return result;
+          } else {
+            return fn(arr);
+          }
+        };
+      }
 
-        let res=currying(mySort)(1,5)(3,3,3)(2)();
-        console.log(res);
+      let res = currying(mySort)(1, 5)(3, 3, 3)(2)();
+      console.log(res);
     </script>
-</head>
-<body>
-    
-</body>
+  </head>
+  <body></body>
 </html>

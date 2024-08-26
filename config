@@ -1,0 +1,9 @@
+Host git.sankuai.com
+HostName git.sankuai.com
+PreferredAuthentications publickey
+IdentityFile ~/.ssh/id_ed25519
+
+Host github.com
+HostName github.com
+PreferredAuthentications publickey
+IdentityFile ~/.ssh/github

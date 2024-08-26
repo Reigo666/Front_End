@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      // 模块模式
+      const Module = (function () {
+        // 私有的方法属性
+        _privateName = 'module';
+        function _getName() {
+          return _privateName;
+        }
+        function _setName(name) {
+          _privateName = name;
+        }
+        return {
+          // 返回公共的方法属性
+          getName() {
+            return _getName();
+          },
+          setName(name) {
+            _setName(name);
+          },
+        };
+      })();
+      Module.setName('abc');
+      console.log(Module._privateName); //访问不到内部的私有方法属性
+      console.log(Module.getName());
+    </script>
+  </head>
+  <body></body>
+</html>

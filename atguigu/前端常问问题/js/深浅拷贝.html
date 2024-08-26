@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <script>
+    // 数组浅拷贝
+    let arr = [0, [1]];
+    const copy1 = [...arr]; //核心
+    const copy11 = arr.slice(); //核心
+    arr[0] = 444;
+    arr[1][0] = 444;
+    console.log('数组浅拷贝copy1', copy1);
+    console.log('数组浅拷贝copy11', copy11);
+
+    // 对象浅拷贝
+    let obj = { a: 1, b: { c: 2 } };
+    const copy2 = { ...obj }; //核心
+    const copy22 = Object.assign({}, obj); //核心
+    obj.a = 444;
+    obj.b.c = 444;
+    console.log('对象浅拷贝copy2', copy2);
+    console.log('对象浅拷贝copy22', copy22);
+
+    //深拷贝
+    arr = [0, [1]];
+    obj = { a: 1, b: { c: 2 } };
+    const deepcopy1 = JSON.parse(JSON.stringify(arr)); //核心
+    const deepcopy2 = JSON.parse(JSON.stringify(obj)); //核心
+    arr[0] = 444;
+    arr[1][0] = 444;
+    obj.a = 444;
+    obj.b.c = 444;
+    console.log('数组深拷贝deepcopy1', deepcopy1);
+    console.log('数组深拷贝deepcopy1', deepcopy2);
+
+    // 深拷贝
+    arr = [0, [1]];
+    obj = { a: 1, b: { c: 2 } };
+    obj.self = obj;
+    function deepcopy(value, hash = new Map()) {
+      if (typeof value !== 'object') return value;
+      if (value === null) return value;
+      if (hash.has(value)) {
+        return hash.get(value);
+      }
+      const result = Array.isArray(value) ? [] : {};
+      hash.set(value, result);
+
+      for (let key in value) {
+        result[key] = deepcopy(value[key], hash);
+      }
+      return result;
+    }
+    const deepcopy11 = deepcopy(arr);
+    const deepcopy22 = deepcopy(obj);
+    arr[0] = 444;
+    arr[1][0] = 444;
+    obj.a = 444;
+    obj.b.c = 444;
+    console.log('数组深拷贝deepcopy11', deepcopy11);
+    console.log('数组深拷贝deepcopy22', deepcopy22);
+  </script>
+  <body></body>
+</html>

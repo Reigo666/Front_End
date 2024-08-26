@@ -1,31 +1,33 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script>
-        function throttle(fn,wait){
-            let timer=null;
-            return function(){
-                if(timer){
-                    return
-                }
-                timer=setTimeout(() => {
-                    fn.apply(this,arguments)
-                    timer=null
-                },wait)
-            }
-        }
-        window.onload=function(){
-            const btn=document.getElementById('btn');
-            btn.onclick=throttle(function(){
-                console.log('发送了ajax请求');
-                console.log('当前按钮是',this);
-            },1000) 
-        }
+      /* 节流分为节流与立即节流，两者区别在于是否立即执行 */
+
+      function throttle(fn, delay, immediate = false) {
+        let timer = null;
+        return function () {
+          if (timer) return;
+          immediate && fn.apply(this, arguments);
+          timer = setTimeout(() => {
+            !immediate && fn.apply(this, arguments);
+            timer = null;
+          }, delay);
+        };
+      }
+
+      window.onload = function () {
+        const btn = document.getElementById('btn');
+        btn.onclick = throttle(function () {
+          console.log('发送了ajax请求');
+          console.log('当前按钮是', this);
+        }, 1000);
+      };
     </script>
-</head>
-<body>
+  </head>
+  <body>
     <button id="btn">点击触发事件</button>
-</body>
+  </body>
 </html>

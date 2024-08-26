@@ -24,7 +24,8 @@
         
 ```
 
-2. vue中的diff算法
+
+1. vue中的diff算法
 ```
     比较新旧的vnode是否相同来判断是否更新。
     1.先判断是否是SameVnode(old,new), 判断其中的key，tag，iscomment(v-if:false)，是否含有数据，这些点是否相同；samevnode是一个
@@ -56,7 +57,7 @@
 4. Vue 和 React 区别
 ``` 
     1.架构不同：
-        Vue：单文件组件，模版写法
+        Vue：单文件组件，模版写法 ，单页面应用
         React：组件化，函数式编程
     2.数据流不同
         Vue：可以双向绑定，通过v-modal。
@@ -141,7 +142,7 @@
     
     总结：在子组件上创建自定义事件，在父组件上触发，回调函数在子组件
 ```
-8.全局事件总线
+8. 全局事件总线
 ```
     一种组件间通信方式，适用于任意组件间通信
     1.安装全局事件总线
@@ -166,33 +167,48 @@
         }
 ```
 
-7. vm.$nextTick(()=>{})
+9. vm.$nextTick(()=>{})
 ```
     this.$nextTick(回调函数)
     在下一次dom更新结束后执行其指定的回调.
     例子：点击编辑按钮 输入框出现后 才能进行focus（否则输入框还不存在）
 ```
-1. vm.$el
+10. vm.$el
 ```
     $el是根元素的真实dom
     this.$el instanceof HTMLElement => true
 ```
-1. vm.$destroy()
+11. vm.$destroy()
 ```
     调用destroy后进入销毁流程。会执行beforedestroy和destroyed生命周期钩子。在beforedestroy和destroyed之间移除所有watchers、child组件、自定义事件。在dom上绑定的原生事件依然可以被触发。在vm.$destroy()调用后所有数据更新都不会使视图更新。
 ```
+12. provide和inject
+```
+    在父组件执行provide，在子组件使用inject即可使用。默认是无响应式的。
+    使用reactive或ref进行包裹即可变为响应式。
+```
+13. vue怎么跳转一个路由
+```
+    1.使用<router-link>to中可以写固定path，或者路由名字，每个路由有固定的名字。
+        <router-link to="/home">Go to Home</router-link>
+        <router-link :to="{ name: 'about' }">Go to About</router-link>
+        router-link是创建导航链接，点击后会根据路由切换路由来切换组件或子组件
+        组件会在router-view位置将组件进行渲染
+    2.使用编程式路由导航
+        this.$router.push({ name: 'user', params: { userId: 123 } });
+```
 
 
 
-1. 1
-2.  1
-3.  1
-4.  1
-5.  1
-6.  1
-7.  1
-8.  1
-9.  
+14. 1
+15. 1
+16. 1
+17. 1
+18. 1
+19. 1
+20. 1
+21. 1
+22. 
 
 $parents?????
 vm.$children 一个数组，里面记录着VueComponents子组件

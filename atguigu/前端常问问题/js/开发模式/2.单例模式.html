@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      let instance1;
+      let instance2;
+      // 单例模式 函数写法
+      function singletonFunc(name) {
+        if (singletonFunc.instance) return singletonFunc.instance;
+        singletonFunc.instance = this; //在函数对象上创建instance属性记录唯一单例
+        // 实例的属性方法
+        this.name = name;
+        this.getName = function () {
+          return this.name;
+        };
+      }
+      instance1 = new singletonFunc('instance1');
+      instance2 = new singletonFunc('instance2');
+      console.log(instance1 === instance2);
+      console.log(instance2.getName());
+
+      //单例模式 类写法
+      class singletonClass {
+        constructor(name) {
+          if (singletonClass.instance) return singletonClass.instance;
+          singletonClass.instance = this; //在类上创建一个instance属性记录唯一单例
+          this.name = name;
+        }
+        getName() {
+          return this.name;
+        }
+      }
+      instance1 = new singletonClass('instance1');
+      instance2 = new singletonClass('instance2');
+      console.log(instance1 === instance2);
+      console.log(instance2.getName());
+    </script>
+  </head>
+  <body></body>
+</html>
