@@ -1268,3 +1268,69 @@ finally和then的先后关系，
 浏览器间通信
 套接字通信
 为什么要有同源策略
+
+1.背景
+lx-event在传递rootTag时不能实现lx-event组件外父元素对lx-event的观察。在传递rootTag进入lx-event后，由于lx-event中的上下文this只能获取到lx-event中的子元素，而不能获取到父元素，导致在lx-event中报warning，找不到#scroll-container标签。如果想要父元素能对lx-event进行监测，就需要使用父元素的this上下文，而不能使用子元素lx-event的上下文。同时我们要把父子观察逻辑收敛到lx-event中，埋点观察上报的逻辑应绑定在埋点中。
+2.目标
+解决rootTag传入后找不到父亲元素的问题。
+当不传递rootTag，即父元素标签时，将以视口作为参照节点，将lx-event作为被观察对象；当传递rootTag时，将父元素作为参照节点，将lx-event作为被观察对象。
+3.方案设计
+不传递rootTag时，将以原代码进行执行，相对视口和lxevent作为参照。(降低影响风险)
+传递rootTag时，createIntersectionObserver需要使用(祖)父组件实例进行创建，才能获得子节点元素，而实例不能通过props直接传递，我们通过在父组件中通过回调函数获得子实例后，调用子组件的某个方法来将父实例创建的_observer传递进去，从而在子组件中完成对交叉观察器的创建
+4.实现细节
+当向子组件传递rootTag的具体流程：当创建_observe时没有父实例时，triggerevent一个自定义函数，将子实例传递出去。父亲引入一个lx-event-behavoir来传入其中写好的回调函数，回调函数中调用子实例的子函数，从而创建父子observe。
+父组件中多个lxevnet，如果每个都用.relativeTo('.parent').observe('.lx-event'),会导致每个observe只会监视第一个lxevent节点。解决方案是，每个lx-event生成一个唯一的 uuidIdName，在绑定时使用uuidClassName进行绑定即可。
+uuid生成注意的问题：uuid是一串数字和字母组成的组合，当数字作为第一位时，将不符合类名的要求，解决是在生成后拼接下划线即可。
+uuid由wxs文件进行生成，在js文件中通过querySelector进行异步获取id。
+自定义事件应该绑定在哪？：想针对哪个父元素进行观察，就应该将自定义事件绑定在哪个元素上。
+
+
+todo1：
+
+wxs 中生成uuidIdName  ，绑定到动态id上，防止js中显式的setData uuidIdName导致页面的重新渲染​done
+
+直接uuidIdName:randID(),会导致所有子组件获得相同的uuidIdName。
+
+出现的问题function randomID()有关正则的逻辑需要重写，在微信小程序中不支持es6的语法，但是在msc中不确定，可能支持。
+
+id可以直接通过wxs直接绑定，但是js中怎么获取此id成为问题。
+
+使用了change:props 监听一个数据 第一次会执行一次的逻辑 实现了视图层向逻辑线程层进行一次主动通信。 ​失败 msc不支持
+
+通过在js文件中直接引入wxs文件。​失败 不能直接引入wxs文件
+
+直接获取元素的id。​成功 直接通过querySelector异步获取所选元素的id，同样会有时序问题，需要在设置父子交叉器前进行等待。
+
+className -> id:​done
+
+考虑动态类可能会有渲染问题，使用id作为唯一标识符，尽量规避底层重排重绘逻辑。更改后观察效果验证正常。
+
+是否有递归栈溢出风险​done
+
+防御性编程，更换函数名，防止重复调用
+
+尝试wx.createselectorquery：​fail
+
+结论，wx.createselectorquery确实可以全局获取父组件中的元素，但获取的实际是dom信息，只能用于计算节点宽高等信息。
+
+todo2：
+
+将父观察子逻辑放在父behavior中​fail
+
+子实例中有很多变量，在父实例中不易改变，且将_observer绑定在父实例上后，页面生命周期里的hide和show要处理不同实例的逻辑，且子实例中还有页面中有新弹窗的特殊逻辑，在父中的hide也要做特别判别。业务更改风险较高，且代码解离过于严重，后期出现错误不易发现，维护人力成本过高。
+
+父亲不再向子传递父实例，而是传递_observer​done
+
+子只需要父实例创建的_observer就可以找到父实例下所有的上下文，只传递observer替换传递instance，更加轻量化。
+
+如何子能不向父传递实例​暂无方案
+
+父亲需要调用子的某个方法，来将observer传递进去。虽然使用selectComponent(selector)方法能获取子实例，但其中的selector必须绑定到组件标签上，这又需要给组件标签绑定固定的id，目前没有方案解决。
+
+自定义事件的回调是否应该停止冒泡​搁置
+
+考虑一种极端情况，ABCD为四个组件，其中组件的关系如下。业务方需要用A观察B，用C观察D。业务方分别在A，C上绑定了behavior的自定义事件，当在D上使用C的rootTag进行观察时，在C创建一个_observer并传递给D后，冒泡会导致A的回调也会创建一个_observer并传递给D。结果可能会导致C传递的_observer正常上报一次；然后A传递的_observer，由于.observe中跨代选择器选择的是C到D的D元素，而找不到D元素。
+
+分析的结论为，C对D完成了一次正确的上报，A对D会因为找不到D组件进行一次报错，对实际使用无影响。
+
+停止冒泡的行为也并不正确，如果需要A对D进行一次监听，停止冒泡会导致A无法对D进行监听。
