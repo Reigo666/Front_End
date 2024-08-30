@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script>
+    // 观察者模式
+    // 被观察的主题 有添加观察者 移除观察者 通知所有观察者等功能
+    class Subject {
+      constructor() {
+        this.observers = []
+      }
+      addObserver(observer) {
+        this.observers.push(observer)
+      }
+      removeObserver(observer) {
+        this.observers = this.observers.filter(obs => obs !== observer)
+      }
+      notifyObservers() {
+        this.observers.forEach(observer => observer.update())
+      }
+    }
+
+    // 观察者
+    class Observer {
+      constructor(name) {
+        this.name = name
+      }
+      update() {
+        console.log(this.name, '已经被通知');
+      }
+    }
+
+    const observerA = new Observer('A')
+    const observerB = new Observer('B')
+    const subject = new Subject()
+    subject.addObserver(observerA)
+    subject.addObserver(observerB)
+    subject.notifyObservers()
+    subject.removeObserver(observerB)
+    subject.notifyObservers()
+
+
+
+  </script>
+</head>
+
+<body>
+</body>
+
+</html>

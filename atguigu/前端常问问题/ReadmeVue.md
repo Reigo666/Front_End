@@ -53,6 +53,21 @@
   最常用的两个生命周期钩子
   mounted():发送网络请求，绑定定时器，绑定自定义事件，订阅消息。
   beforeDestroy():清除定时器，解绑自定义事件，取消订阅消息。
+
+  微信小程序实测执行顺序：
+  page behavior created
+  page behavior attached
+  child created
+  parent behavior created
+  parent created
+  parent behavior attached
+  parent attached
+  child attached
+  Page onLoad
+  child ready
+  parent behavior ready
+  parent ready
+  Page onShow
 ```
 4. Vue 和 React 区别
 ``` 

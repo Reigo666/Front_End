@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <script>
+    // 工厂模式
+    // 工厂模式可以根据不同的条件动态地决定实例化哪一个具体类
+    class Product {
+      constructor(name) {
+        this.name = name
+      }
+      display() {
+        console.log('product', this.name);
+      }
+    }
+    class ProductA extends Product {
+      constructor() {
+        super('ProductA')
+      }
+    }
+    class ProductB extends Product {
+      constructor() {
+        super('ProductB')
+      }
+    }
+    class Factory {
+      static createProduct(type) {
+        switch (type) {
+          case 'A':
+            return new ProductA();
+          case 'B':
+            return new ProductB();
+          default:
+            throw new Error('创建了一个不存在的product')
+        }
+      }
+    }
+
+    Factory.createProduct('A').display()
+    Factory.createProduct('B').display()
+
+  </script>
+</head>
+
+<body></body>
+
+</html>

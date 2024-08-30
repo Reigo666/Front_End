@@ -1261,3 +1261,10 @@ react provider标签以及其使用原理
 
 react 路由的两种模式
 
+resolve后是否执行，
+finally和then的先后关系，
+
+服务端推送
+浏览器间通信
+套接字通信
+为什么要有同源策略
